@@ -1,6 +1,8 @@
 import { Hono } from "hono";
-import authRoutes from "./authRoutes";
-import blogRoutes from "./blogRoutes";
+
+// Import V1 routes
+import authRoutes from "./v1/authRoutes";
+import blogRoutes from "./v1/blogRoutes";
 
 const mainRoute = new Hono();
 
