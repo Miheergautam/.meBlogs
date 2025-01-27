@@ -3,9 +3,12 @@ import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { Context } from "hono";
 
+import { decode, sign, verify } from "hono/jwt";
+
 type AppBindings = {
   Bindings: {
     DATABASE_URL: string;
+    JWT_SECRET: string;
   };
 };
 
@@ -39,7 +42,18 @@ const userRegister = async (c: Context<AppBindings>) => {
       },
     });
 
-    return c.json({ message: "User created successfully", user: newUser });
+    const jwt = await sign(
+      {
+        id: newUser.id,
+      },
+      c.env.JWT_SECRET
+    );
+
+    return c.json({
+      message: "User created successfully",
+      user: newUser,
+      jwt: jwt,
+    });
   } catch (e) {
     console.error("Error in user registration:", e);
     return c.json({ message: "Failed to register user" }, 500);
@@ -71,9 +85,17 @@ const userLogin = async (c: Context<AppBindings>) => {
       return c.json({ message: "Invalid email or password" }, 401);
     }
 
+    const jwt = await sign(
+      {
+        id: user.id,
+      },
+      c.env.JWT_SECRET
+    );
+
     return c.json({
       message: "Login successful",
       user: { id: user.id, email: user.email, name: user.name },
+      jwt: jwt,
     });
   } catch (e) {
     console.error("Error in user login:", e);
