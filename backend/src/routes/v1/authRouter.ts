@@ -6,9 +6,9 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 
 import authFunctions from "../../controllers/authController";
 
-const authRoutes = new Hono();
+const authRouter = new Hono();
 
-authRoutes.post("/login", authFunctions.userLogin);
-authRoutes.post("/register", authFunctions.userRegister);
+authRouter.post("/login", authFunctions.userLogin);
+authRouter.post("/register", authFunctions.userRegister);
 
-export default authRoutes;
+export default authRouter;

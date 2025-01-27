@@ -1,29 +1,29 @@
 import { Hono } from "hono";
 
-const blogRoutes = new Hono();
+const blogRouter = new Hono();
 
-blogRoutes.post("/", (c) => {
+blogRouter.post("/", (c) => {
   return c.json({ message: "Create" });
 });
 
-blogRoutes.put("/:id", (c) => {
+blogRouter.put("/:id", (c) => {
   return c.json({ message: "Update" });
 });
 
-blogRoutes.get("/", (c) => {
+blogRouter.get("/", (c) => {
   return c.json({ message: "Read" });
 });
 
-blogRoutes.get("/:id", (c) => {
+blogRouter.get("/:id", (c) => {
   return c.json({ message: "Read by ID" });
 });
 
-blogRoutes.post("/bulk", (c) => {
+blogRouter.post("/bulk", (c) => {
   return c.json({ message: "Bulk Create" });
 });
 
-blogRoutes.delete("/:id", (c) => {
+blogRouter.delete("/:id", (c) => {
   return c.json({ message: "Delete" });
 });
 
-export default blogRoutes;
+export default blogRouter;
