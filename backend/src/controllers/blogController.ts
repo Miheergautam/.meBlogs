@@ -1,0 +1,164 @@
+import { PrismaClient } from "@prisma/client/edge";
+import { withAccelerate } from "@prisma/extension-accelerate";
+import { Context } from "hono";
+
+type AppBindings = {
+  Bindings: {
+    DATABASE_URL: string;
+  };
+};
+
+const createBlog = async (c: Context<AppBindings>) => {
+  try {
+    const body = await c.req.json();
+
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const newBlog = await prisma.blog.create({
+      data: {
+        title: body.title,
+        content: body.content,
+        authorId: 1,
+      },
+      select: {
+        id: true,
+        title: true,
+        content: true,
+      },
+    });
+
+    return c.json({
+      message: "Blog created successfully",
+      blog: newBlog,
+    });
+  } catch (e) {
+    console.error("Error in creating blog:", e);
+    return c.json({ message: "Failed to create blog" }, 500);
+  }
+};
+
+const updateBlog = async (c: Context<AppBindings>) => {
+  try {
+    const body = await c.req.json();
+    const id = c.req.param("id");
+
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const updatedBlog = await prisma.blog.update({
+      where: { id: parseInt(id) },
+      data: {
+        title: body.title,
+        content: body.content,
+      },
+      select: {
+        id: true,
+        title: true,
+        content: true,
+      },
+    });
+
+    return c.json({
+      message: "Blog updated successfully",
+      blog: updatedBlog,
+    });
+  } catch (e) {
+    console.error("Error in updating blog:", e);
+    return c.json({ message: "Failed to update blog" }, 500);
+  }
+};
+
+const readBlogs = async (c: Context<AppBindings>) => {
+  try {
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const blogs = await prisma.blog.findMany({
+      select: {
+        id: true,
+        title: true,
+        content: true,
+      },
+    });
+
+    return c.json({
+      message: "Blogs retrieved successfully",
+      blogs: blogs,
+    });
+  } catch (e) {
+    console.error("Error in reading blogs:", e);
+    return c.json({ message: "Failed to read blogs" }, 500);
+  }
+};
+
+const readBlog = async (c: Context<AppBindings>) => {
+  try {
+    const id = c.req.param("id");
+
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const blog = await prisma.blog.findUnique({
+      where: { id: parseInt(id) },
+      select: {
+        id: true,
+        title: true,
+        content: true,
+      },
+    });
+
+    return c.json({
+      message: "Blog retrieved successfully",
+      blog: blog,
+    });
+  } catch (e) {
+    console.error("Error in reading blog:", e);
+    return c.json({ message: "Failed to read blog" }, 500);
+  }
+};
+
+const deleteBlog = async (c: Context<AppBindings>) => {
+  try {
+    const id = c.req.param("id");
+
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    await prisma.blog.delete({
+      where: { id: parseInt(id) },
+    });
+
+    return c.json({
+      message: "Blog deleted successfully",
+    });
+  } catch (e) {
+    console.error("Error in deleting blog:", e);
+    return c.json({ message: "Failed to delete blog" }, 500);
+  }
+};
+
+const bulkCreateBlog = async (c: Context<AppBindings>) => {
+  try {
+    console.log("Bulk Create");
+  } catch (e) {
+    console.error("Error in bulk create blog:", e);
+    return c.json({ message: "Failed to bulk create blog" }, 500);
+  }
+};
+
+const blogFunctions = {
+  createBlog,
+  updateBlog,
+  readBlogs,
+  readBlog,
+  deleteBlog,
+  bulkCreateBlog,
+};
+
+export default blogFunctions;

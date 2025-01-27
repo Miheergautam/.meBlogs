@@ -1,29 +1,20 @@
 import { Hono } from "hono";
 
+import blogFunctions from "../../controllers/blogController";
+
 const blogRouter = new Hono();
 
-blogRouter.post("/", (c) => {
-  return c.json({ message: "Create" });
-});
-
-blogRouter.put("/:id", (c) => {
-  return c.json({ message: "Update" });
-});
-
-blogRouter.get("/", (c) => {
-  return c.json({ message: "Read" });
-});
-
-blogRouter.get("/:id", (c) => {
-  return c.json({ message: "Read by ID" });
-});
-
-blogRouter.post("/bulk", (c) => {
-  return c.json({ message: "Bulk Create" });
-});
-
-blogRouter.delete("/:id", (c) => {
-  return c.json({ message: "Delete" });
-});
+//create a blog
+blogRouter.post("/", blogFunctions.createBlog);
+//update a blog
+blogRouter.put("/:id", blogFunctions.updateBlog);
+//get all blogs
+blogRouter.get("/", blogFunctions.readBlogs);
+//get a blog by id
+blogRouter.get("/:id", blogFunctions.readBlog);
+//delete a blog by id
+blogRouter.delete("/:id", blogFunctions.deleteBlog);
+//bulk create blogs
+//blogRouter.post("/bulk", blogFunctions.bulkCreateBlog);
 
 export default blogRouter;
