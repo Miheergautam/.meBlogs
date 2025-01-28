@@ -97,14 +97,22 @@ const readBlogs = async (c: Context<AppBindings>) => {
 
 const readBlog = async (c: Context<AppBindings>) => {
   try {
-    const id = c.req.param("id");
+    const idParam = c.req.param("id");
+    if (!idParam) {
+      return c.json({ message: "Blog ID is required" }, 400);
+    }
+
+    const id = parseInt(idParam, 10);
+    if (isNaN(id)) {
+      return c.json({ message: "Invalid Blog ID" }, 400);
+    }
 
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
     const blog = await prisma.blog.findUnique({
-      where: { id: parseInt(id) },
+      where: { id: id },
       select: {
         id: true,
         title: true,
@@ -143,12 +151,25 @@ const deleteBlog = async (c: Context<AppBindings>) => {
   }
 };
 
-const bulkCreateBlog = async (c: Context<AppBindings>) => {
+const bulkBlogs = async (c: Context<AppBindings>) => {
   try {
-    console.log("Bulk Create");
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const blogs = await prisma.blog.findMany();
+
+    if (!blogs || blogs.length === 0) {
+      return c.json({ message: "No blogs found", blogs: [] }, 200);
+    }
+
+    return c.json({
+      message: "Blogs retrieved successfully",
+      blogs: blogs,
+    });
   } catch (e) {
-    console.error("Error in bulk create blog:", e);
-    return c.json({ message: "Failed to bulk create blog" }, 500);
+    console.error("Error in reading blogs:", e);
+    return c.json({ message: "Failed to read blogs" }, 500);
   }
 };
 
@@ -158,7 +179,7 @@ const blogFunctions = {
   readBlogs,
   readBlog,
   deleteBlog,
-  bulkCreateBlog,
+  bulkBlogs,
 };
 
 export default blogFunctions;
