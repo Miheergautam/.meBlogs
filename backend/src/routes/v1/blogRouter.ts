@@ -21,21 +21,20 @@ const blogRouter = new Hono<{
 }>();
 
 blogRouter.use("/*", async (c, next) => {
-  console.log("Middleware for blogRouter");
-
   const authHeader = c.req.header("Authorization") || "";
   if (!authHeader) {
     return c.json({ message: "Authorization header is required" }, 401);
   }
   const token = authHeader.split(" ")[1];
-
-  const user = (await verify(token, c.env.JWT_SECRET)) as CustomJWTPayload;
-  if (user) {
-    console.log("User: ", user);
-    const userId = user.id;
-    c.set("userId", userId);
-    await next();
-  } else {
+  try {
+    const user = (await verify(token, c.env.JWT_SECRET)) as CustomJWTPayload;
+    if (user) {
+      console.log("User: ", user);
+      const userId = user.id;
+      c.set("userId", userId);
+      await next();
+    }
+  } catch (err) {
     return c.json({ message: "Invalid token" }, 401);
   }
 });
