@@ -6,12 +6,15 @@ type AppBindings = {
   Bindings: {
     DATABASE_URL: string;
   };
+  Variables: {
+    userId: number;
+  };
 };
 
 const createBlog = async (c: Context<AppBindings>) => {
   try {
     const body = await c.req.json();
-
+    const authorId = c.get("userId");
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
@@ -20,7 +23,7 @@ const createBlog = async (c: Context<AppBindings>) => {
       data: {
         title: body.title,
         content: body.content,
-        authorId: 1,
+        authorId: authorId,
       },
       select: {
         id: true,
