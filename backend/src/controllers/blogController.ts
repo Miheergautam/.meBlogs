@@ -1,6 +1,10 @@
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { Context } from "hono";
+import {
+  createBlogInput,
+  updateBlogInput,
+} from "@miheer_gautam4/.meblogs-common";
 
 type AppBindings = {
   Bindings: {
@@ -14,6 +18,9 @@ type AppBindings = {
 const createBlog = async (c: Context<AppBindings>) => {
   try {
     const body = await c.req.json();
+    const { success } = createBlogInput.safeParse(body);
+    if (!success) return c.json({ message: "Invalid input" }, 400);
+
     const authorId = c.get("userId");
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
@@ -45,6 +52,8 @@ const createBlog = async (c: Context<AppBindings>) => {
 const updateBlog = async (c: Context<AppBindings>) => {
   try {
     const body = await c.req.json();
+    const { success } = updateBlogInput.safeParse(body);
+    if (!success) return c.json({ message: "Invalid input" }, 400);
     const id = c.req.param("id");
 
     const prisma = new PrismaClient({

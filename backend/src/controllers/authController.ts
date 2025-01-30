@@ -3,7 +3,8 @@ import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { Context } from "hono";
 
-import { decode, sign, verify } from "hono/jwt";
+import { sign } from "hono/jwt";
+import { signinInput, signupInput } from "@miheer_gautam4/.meblogs-common";
 
 type AppBindings = {
   Bindings: {
@@ -15,6 +16,8 @@ type AppBindings = {
 const userRegister = async (c: Context<AppBindings>) => {
   try {
     const body = await c.req.json();
+    const { success } = signupInput.safeParse(body);
+    if (!success) return c.json({ message: "Invalid input" }, 400);
 
     // Validate input
     if (!body.email) return c.json({ message: "Email is required" }, 400);
@@ -63,6 +66,8 @@ const userRegister = async (c: Context<AppBindings>) => {
 const userLogin = async (c: Context<AppBindings>) => {
   try {
     const body = await c.req.json();
+    const { success } = signinInput.safeParse(body);
+    if (!success) return c.json({ message: "Invalid input" }, 400);
 
     // Validate input
     if (!body.email) return c.json({ message: "Email is required" }, 400);
