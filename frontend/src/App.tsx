@@ -5,6 +5,7 @@ import LandingPage from "./pages/LandingPage";
 import SigninPage from "./pages/SigninPage";
 import SignupPage from "./pages/SignupPage";
 import HomePage from "./pages/HomePage";
+import BlogsPage from "./pages/BlogsPage";
 
 import Layout from "./layout/Layout";
 import DashboardLayout from "./layout/DashboardLayout";
@@ -21,6 +22,7 @@ function App() {
         {/* Public Layout */}
         <Route element={<Layout />}>
           <Route path="/home" element={<HomePage />} />
+          <Route path="/blogs" element={<BlogsPage />} />
         </Route>
 
         {/* Dashboard Layout */}
