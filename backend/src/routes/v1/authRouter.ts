@@ -10,5 +10,7 @@ const authRouter = new Hono();
 
 authRouter.post("/login", authFunctions.userLogin);
 authRouter.post("/register", authFunctions.userRegister);
+authRouter.put("/update", authFunctions.updateUser);
+authRouter.get("/get", authFunctions.getUser);
 
 export default authRouter;

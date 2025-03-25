@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { IoArrowBack } from "react-icons/io5"; // Import back icon
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,8 @@ const SignupPage = () => {
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,6 +22,7 @@ const SignupPage = () => {
     e.preventDefault();
     setError("");
     setSuccess("");
+    setLoading(true);
 
     try {
       const response = await axios.post(
@@ -30,15 +34,26 @@ const SignupPage = () => {
     } catch (err) {
       console.error("Error:", err);
       setError("Sign-up failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-neutral-800">
-      <div className="w-full max-w-md bg-neutral-300 p-6 rounded-xl">
+    <div className="flex min-h-screen items-center justify-center bg-neutral-900">
+      <div className="w-full max-w-md bg-neutral-300 p-6 rounded-xl relative">
+        {/* Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className="absolute top-4 left-4 text-neutral-700 hover:text-red-500 transition"
+        >
+          <IoArrowBack size={24} />
+        </button>
+
         <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
         {error && <p className="text-red-500 text-center">{error}</p>}
         {success && <p className="text-green-500 text-center">{success}</p>}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block">Name</label>
@@ -76,10 +91,12 @@ const SignupPage = () => {
           <button
             type="submit"
             className="w-full bg-red-400 text-white py-2 rounded-lg hover:bg-red-500 transition"
+            disabled={loading}
           >
-            Sign Up
+            {loading ? "Signing up..." : "Sign Up"}
           </button>
         </form>
+
         <p className="text-center text-gray-600 mt-4">
           Already registered?{" "}
           <Link to="/signin" className="text-red-400 hover:underline">

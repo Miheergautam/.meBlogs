@@ -4,12 +4,20 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import SigninPage from "./pages/SigninPage";
 import SignupPage from "./pages/SignupPage";
-import HomePage from "./pages/HomePage";
 import BlogsPage from "./pages/BlogsPage";
-
-import Layout from "./layout/Layout";
-import DashboardLayout from "./layout/DashboardLayout";
 import NewPostPage from "./components/DashboardPage/NewPostPage";
+import BlogDetailPage from "./pages/BlogDetailPage";
+import ProfilePage from "./pages/ProfilePage";
+import BlogListPage from "./pages/BlogListPage";
+import EditBlogPage from "./pages/EditBlogPage";
+
+// Layouts
+import DashboardLayout from "./layout/DashboardLayout";
+import BlogLayout from "./layout/BlogLayout";
+import ProfileLayout from "./layout/ProfileLayout";
+
+// Protected Route
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -19,15 +27,24 @@ function App() {
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/signup" element={<SignupPage />} />
 
-        {/* Public Layout */}
-        <Route element={<Layout />}>
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/blogs" element={<BlogsPage />} />
-        </Route>
+        {/* Public Blog Routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<BlogLayout />}>
+            <Route path="/blogs" element={<BlogsPage />} />
+            <Route path="/blog/:id" element={<BlogDetailPage />} />
+          </Route>
 
-        {/* Dashboard Layout */}
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route path="/dashboard/newpost" element={<NewPostPage />} />
+          {/* Protected Dashboard Routes */}
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route path="newpost" element={<NewPostPage />} />
+            <Route path="edit/:id" element={<EditBlogPage />} />
+
+            <Route path="bloglist" element={<BlogListPage />} />
+            <Route path="settings" element={<NewPostPage />} />
+            <Route element={<ProfileLayout />}>
+              <Route path="profile" element={<ProfilePage />} />
+            </Route>
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

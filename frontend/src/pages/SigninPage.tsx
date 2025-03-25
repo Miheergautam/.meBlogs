@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { IoArrowBack } from "react-icons/io5"; // Import back icon
 
 const SigninPage = () => {
   const [formData, setFormData] = useState({
@@ -9,7 +9,7 @@ const SigninPage = () => {
     password: "",
   });
   const [error, setError] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,6 +19,7 @@ const SigninPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
       const response = await axios.post(
@@ -29,18 +30,29 @@ const SigninPage = () => {
       const jwt = response.data.jwt;
       localStorage.setItem("token", `Bearer ${jwt}`);
       console.log("Token", jwt);
-      navigate("/home");
+      navigate("/blogs");
     } catch (err) {
       console.error("Error:", err);
       setError("Invalid email or password");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-neutral-800">
-      <div className="w-full max-w-md bg-neutral-300 p-6 rounded-xl">
+    <div className="flex min-h-screen items-center justify-center bg-neutral-900">
+      <div className="w-full max-w-md bg-neutral-300 p-6 rounded-xl relative">
+        {/* Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className="absolute top-4 left-4 text-neutral-700 hover:text-red-500 transition"
+        >
+          <IoArrowBack size={24} />
+        </button>
+
         <h2 className="text-2xl font-bold text-center mb-6">Sign In</h2>
         {error && <p className="text-red-500 text-center">{error}</p>}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block">Email</label>
@@ -67,10 +79,12 @@ const SigninPage = () => {
           <button
             type="submit"
             className="w-full bg-red-400 text-white py-2 rounded-lg hover:bg-red-500 transition"
+            disabled={loading}
           >
-            Sign In
+            {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
+
         <p className="text-center text-gray-600 mt-4">
           Not registered?{" "}
           <Link to="/signup" className="text-red-400 hover:underline">

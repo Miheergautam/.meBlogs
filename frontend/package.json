@@ -10,16 +10,26 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@miheer_gautam4/.meblogs-common": "^1.0.0",
+    "@miheer_gautam4/.meblogs-common": "^1.0.2",
+    "@reduxjs/toolkit": "^2.6.1",
+    "@shadcn/ui": "^0.0.4",
     "@tailwindcss/vite": "^4.0.3",
+    "@types/lodash.debounce": "^4.0.9",
+    "lodash": "^4.17.21",
+    "lodash.debounce": "^4.0.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.5.0",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.2.0",
+    "slate": "^0.112.0",
+    "slate-history": "^0.110.3",
+    "slate-react": "^0.112.1",
     "tailwindcss": "^4.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    "@types/lodash": "^4.17.16",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",

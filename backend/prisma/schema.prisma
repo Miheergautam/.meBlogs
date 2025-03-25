@@ -14,20 +14,25 @@ datasource db {
 }
 
 model User{
-  id Int @id @default(autoincrement())
-  name String?
-  email String @unique
-  password String
-  blogs Blog[]
+  id          Int    @id @default(autoincrement())
+  name        String?
+  email       String @unique
+  password    String
+  bio         String?       // New field
+  profileImage String?      // New field
+  blogs       Blog[]
 }
 
 model Blog{
-  id Int @id @default(autoincrement())
-  title String
-  content String
-  published Boolean @default(false)
-  thumbnail String?
-  author User @relation(fields: [authorId], references: [id])
-  authorId Int
+  id         Int     @id @default(autoincrement())
+  title      String
+  content    Json
+  published  Boolean @default(false)
+  thumbnail  String?
+  author     User    @relation(fields: [authorId], references: [id])
+  authorId   Int
+  category   String?
+  createdAt  DateTime @default(now()) // New field
+  updatedAt  DateTime? @updatedAt      // New field
 
 }
