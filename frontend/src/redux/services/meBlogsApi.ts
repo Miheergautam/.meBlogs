@@ -26,6 +26,11 @@ export interface User {
   profileImage: string;
 }
 
+export interface AuthResponse {
+  token: string;
+  user: User;
+}
+
 // Define the base URL
 const BASE_URL = "https://backend.miheergautam04.workers.dev/api/v1";
 
@@ -42,26 +47,55 @@ export const meBlogsApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["User", "Blogs"],
   endpoints: (builder) => ({
-    // Fetch a single blog
-    getBlog: builder.query<Blog, number>({
-      query: (id) => `/blogs/${id}`,
-      transformResponse: (response: { blog: Blog }) => response.blog,
+    // 📌 Register a new user ----- -Done
+    registerUser: builder.mutation<{ message: string }, { name: string; email: string; password: string }>({
+      query: (userData) => ({
+        url: "/auth/register",
+        method: "POST",
+        body: userData,
+      }),
     }),
 
-    // Fetch all blogs
-    getBlogs: builder.query<Blog[], void>({
-      query: () => `/blogs/bulk`,
-      transformResponse: (response: { blogs: Blog[] }) => response.blogs,
+    // 📌 Login user ------- Done
+    loginUser: builder.mutation<AuthResponse, { email: string; password: string }>({
+      query: (credentials) => ({
+        url: "/auth/login",
+        method: "POST",
+        body: credentials,
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          localStorage.setItem("token", data.token);
+          dispatch(meBlogsApi.util.invalidateTags(["User"]));
+        } catch (err) {
+          console.error("Login failed", err);
+        }
+      },
     }),
 
-    // Fetch the authenticated user details
+    // 📌 Logout user
+    logoutUser: builder.mutation<{ message: string }, void>({
+      query: () => ({
+        url: "/auth/logout",
+        method: "POST",
+      }),
+      async onQueryStarted(_, { dispatch }) {
+        localStorage.removeItem("token");
+        dispatch(meBlogsApi.util.invalidateTags(["User"]));
+      },
+    }),
+
+    // 📌 Fetch the authenticated user details
     getUser: builder.query<User, void>({
       query: () => `/auth/get`,
       transformResponse: (response: { user: User }) => response.user,
+      providesTags: ["User"],
     }),
 
-    // Update user profile
+    // 📌 Update user profile
     updateUser: builder.mutation<User, Partial<User>>({
       query: (body) => ({
         url: "/auth/update",
@@ -69,9 +103,24 @@ export const meBlogsApi = createApi({
         body,
       }),
       transformResponse: (response: { user: User }) => response.user,
+      invalidatesTags: ["User"],
     }),
 
-    // Create a new blog
+    // 📌 Fetch a single blog
+    getBlog: builder.query<Blog, number>({
+      query: (id) => `/blogs/${id}`,
+      transformResponse: (response: { blog: Blog }) => response.blog,
+      providesTags: ["Blogs"],
+    }),
+
+    // 📌 Fetch all blogs
+    getBlogs: builder.query<Blog[], void>({
+      query: () => `/blogs/bulk`,
+      transformResponse: (response: { blogs: Blog[] }) => response.blogs,
+      providesTags: ["Blogs"],
+    }),
+
+    // 📌 Create a new blog
     createBlog: builder.mutation<Blog, Partial<Blog>>({
       query: (newBlog) => ({
         url: "/blogs",
@@ -79,9 +128,10 @@ export const meBlogsApi = createApi({
         body: newBlog,
       }),
       transformResponse: (response: { blog: Blog }) => response.blog,
+      invalidatesTags: ["Blogs"],
     }),
 
-    // Update an existing blog
+    // 📌 Update an existing blog
     updateBlog: builder.mutation<Blog, { id: number; updatedBlog: Partial<Blog> }>({
       query: ({ id, updatedBlog }) => ({
         url: `/blogs/${id}`,
@@ -89,24 +139,29 @@ export const meBlogsApi = createApi({
         body: updatedBlog,
       }),
       transformResponse: (response: { blog: Blog }) => response.blog,
+      invalidatesTags: ["Blogs"],
     }),
 
-    // Delete a blog
+    // 📌 Delete a blog
     deleteBlog: builder.mutation<{ message: string }, number>({
       query: (id) => ({
         url: `/blogs/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Blogs"],
     }),
   }),
 });
 
-// Export generated hooks
+// ✅ Export generated hooks
 export const {
-  useGetBlogQuery,
-  useGetBlogsQuery,
+  useRegisterUserMutation,
+  useLoginUserMutation,
+  useLogoutUserMutation,
   useGetUserQuery,
   useUpdateUserMutation,
+  useGetBlogQuery,
+  useGetBlogsQuery,
   useCreateBlogMutation,
   useUpdateBlogMutation,
   useDeleteBlogMutation,
