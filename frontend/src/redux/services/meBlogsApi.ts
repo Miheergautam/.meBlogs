@@ -59,7 +59,7 @@ export const meBlogsApi = createApi({
     }),
 
     // 📌 Login user ------- Done
-    loginUser: builder.mutation<AuthResponse, { email: string; password: string }>({
+    loginUser: builder.mutation<{ token: string }, { email: string; password: string }>({
       query: (credentials) => ({
         url: "/auth/login",
         method: "POST",
@@ -67,14 +67,19 @@ export const meBlogsApi = createApi({
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
-          const { data } = await queryFulfilled;
-          localStorage.setItem("token", data.token);
-          dispatch(meBlogsApi.util.invalidateTags(["User"]));
+          const response = await queryFulfilled;
+          const token = response?.data?.token;
+    
+          if (token) {
+            localStorage.setItem("token",`Bearer ${token}`);
+            dispatch(meBlogsApi.util.invalidateTags(["User"]));
+          }
         } catch (err) {
           console.error("Login failed", err);
         }
       },
     }),
+    
 
     // 📌 Logout user
     logoutUser: builder.mutation<{ message: string }, void>({

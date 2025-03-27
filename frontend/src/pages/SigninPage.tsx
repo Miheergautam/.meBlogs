@@ -23,8 +23,7 @@ const SigninPage = () => {
     setErrorMessage(null);
 
     try {
-      const response = await loginUser(formData).unwrap();
-      localStorage.setItem("token", `Bearer ${response.token}`);
+      await loginUser(formData).unwrap();
       navigate("/blogs");
     } catch (error: any) {
       setErrorMessage(error?.data?.message || "Invalid email or password");
@@ -56,7 +55,7 @@ const SigninPage = () => {
               value={formData.email}
               onChange={handleChange}
               className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-neutral-700 text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-red-500"
-              placeholder="example@domain.com"
+              placeholder="updating@me.com"
               required
             />
           </div>

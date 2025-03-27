@@ -42,7 +42,7 @@ const SignupPage = () => {
           <IoArrowBack size={22} />
         </button>
 
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-center mb-5 sm:mb-6">Create an Account</h2>
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-center mb-5 sm:mb-6">Sign Up</h2>
 
         {errorMessage && <p className="text-red-500 text-center mb-3">{errorMessage}</p>}
         {isSuccess && <p className="text-green-500 text-center mb-3">Signup successful! Redirecting...</p>}
@@ -57,7 +57,7 @@ const SignupPage = () => {
               value={formData.name}
               onChange={handleChange}
               className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-neutral-700 text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-red-500"
-              placeholder="John Doe"
+              placeholder="Updating Me"
               required
             />
           </div>
@@ -71,7 +71,7 @@ const SignupPage = () => {
               value={formData.email}
               onChange={handleChange}
               className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-neutral-700 text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-red-500"
-              placeholder="example@domain.com"
+              placeholder="updating@me.com"
               required
             />
           </div>
