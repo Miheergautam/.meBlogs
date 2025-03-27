@@ -37,12 +37,7 @@ const userRegister = async (c: Context<AppBindings>) => {
         email: body.email,
         password: body.password,
         name: body.name,
-      },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-      },
+      }
     });
 
     const jwt = await sign(
@@ -54,8 +49,6 @@ const userRegister = async (c: Context<AppBindings>) => {
 
     return c.json({
       message: "User created successfully",
-      user: newUser,
-      jwt: jwt,
     });
   } catch (e) {
     console.error("Error in user registration:", e);
@@ -99,8 +92,7 @@ const userLogin = async (c: Context<AppBindings>) => {
 
     return c.json({
       message: "Login successful",
-      user: { id: user.id, email: user.email, name: user.name },
-      jwt: jwt,
+      token: jwt,
     });
   } catch (e) {
     console.error("Error in user login:", e);
