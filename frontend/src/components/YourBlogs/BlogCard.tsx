@@ -36,11 +36,11 @@ export default function BlogCard({
   };
 
   return (
-    <div className="grid grid-cols-4 bg-neutral-800 p-4 rounded-lg shadow-md w-full mb-4 items-center relative">
+    <div className="grid grid-cols-1 sm:grid-cols-4 bg-neutral-800 p-4 rounded-lg shadow-md w-full mb-4 items-center relative">
       <div className="flex items-center space-x-4 col-span-1">
         <img
           src={blog.thumbnail}
-          alt={blog.title}
+          alt={`Thumbnail for blog: ${blog.title}`}
           className="w-16 h-16 object-cover rounded-lg"
         />
         <div className="truncate">
@@ -67,10 +67,12 @@ export default function BlogCard({
         </span>
       </div>
 
+      {/* Date */}
       <div className="text-center text-neutral-400 text-sm">
         {new Date(blog.createdAt).toLocaleDateString()}
       </div>
 
+      {/* Action Icons */}
       <div className="flex items-center justify-end space-x-3 text-gray-400">
         <Link to={`/blog/${blog.id}`} className="hover:text-blue-300">
           <FaLink size={20} />
@@ -86,7 +88,7 @@ export default function BlogCard({
         <Link to={`/dashboard/edit/${blog.id}`} className="hover:text-gray-300">
           <FaEdit size={20} />
         </Link>
-        
+
         <button
           onClick={() => onDelete(blog.id)}
           className="hover:text-red-500 transition"
@@ -95,6 +97,7 @@ export default function BlogCard({
         </button>
       </div>
 
+      {/* Confirmation Modal */}
       {showConfirm && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
           <div className="bg-neutral-800 p-6 rounded-xl shadow-2xl w-80 text-center border border-neutral-700 animate-fade-in">

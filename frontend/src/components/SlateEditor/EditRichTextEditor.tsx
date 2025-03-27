@@ -50,7 +50,7 @@ const ToolbarButton: React.FC<{
           ? toggleBlock(editor, format as BlockFormat)
           : toggleMark(editor, format as MarkFormat);
       }}
-      className="mx-1 p-1 text-white rounded hover:bg-neutral-600 bg-neutral-700"
+      className="mx-1 p-2 text-white rounded-md hover:bg-neutral-600 bg-neutral-700"
     >
       {icon}
     </button>
@@ -95,18 +95,18 @@ const Element = ({ attributes, children, element }: any) => {
   switch (element.type) {
     case "heading-one":
       return (
-        <h1 {...attributes} className="text-xl font-bold">
+        <h1 {...attributes} className="text-xl font-bold text-white">
           {children}
         </h1>
       );
     case "blockquote":
       return (
-        <blockquote {...attributes} className="border-l-4 pl-4 italic">
+        <blockquote {...attributes} className="border-l-4 pl-4 italic text-white">
           {children}
         </blockquote>
       );
     default:
-      return <p {...attributes}>{children}</p>;
+      return <p {...attributes} className="text-white">{children}</p>;
   }
 };
 
@@ -135,7 +135,7 @@ const EditRichTextEditor: React.FC<{
   return (
     <Slate editor={editor} initialValue={value} onChange={handleChange}>
       {/* Toolbar */}
-      <div className="flex bg-neutral-700 p-2 rounded-md mb-2">
+      <div className="flex bg-neutral-700 p-2 rounded-md mb-4">
         <ToolbarButton format="bold" icon={<FaBold />} />
         <ToolbarButton format="italic" icon={<FaItalic />} />
         <ToolbarButton format="underline" icon={<FaUnderline />} />
@@ -149,7 +149,7 @@ const EditRichTextEditor: React.FC<{
         placeholder="Write your blog post..."
         renderLeaf={(props) => <Leaf {...props} />}
         renderElement={(props) => <Element {...props} />}
-        className="p-3 bg-neutral-700 rounded-md max-h-[200px] min-h-[200px] max-w-5xl w-full overflow-auto focus:outline-none"
+        className="p-4 bg-neutral-700 rounded-md text-white focus:outline-none min-h-[200px] max-w-5xl w-full overflow-auto"
       />
     </Slate>
   );

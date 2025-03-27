@@ -1,7 +1,6 @@
 import { useState } from "react";
 import RichTextEditor from "../components/SlateEditor/RichTextEditor";
 import { Descendant } from "slate";
-
 import axios from "axios";
 
 export default function BlogForm() {
@@ -9,8 +8,16 @@ export default function BlogForm() {
   const [category, setCategory] = useState("");
   const [thumbnail, setThumbnail] = useState("");
   const [content, setContent] = useState<Descendant[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const handleSave = async () => {
+    if (!title || !category || !thumbnail || !content.length) {
+      alert("Please fill out all fields.");
+      return;
+    }
+
+    setLoading(true);
+
     const blogData = {
       title,
       category,
@@ -35,29 +42,31 @@ export default function BlogForm() {
     } catch (error) {
       console.error("Error saving blog:", error);
       alert("Failed to save blog.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="py-4 px-8 text-white w-full rounded-xl">
-      <h1 className="text-3xl font-bold mb-6 border-b border-neutral-600 pb-2">Create a New Blog</h1>
+    <div className="py-8 px-10 bg-neutral-900 text-white rounded-xl shadow-lg w-full max-w-5xl mx-auto mt-8">
+      <h1 className="text-4xl font-extrabold mb-8 text-center text-gray-100">Create a New Blog</h1>
 
       {/* Title Input */}
-      <label className="block mb-2 text-gray-400">Title</label>
+      <label className="block mb-3 text-sm text-gray-300">Title</label>
       <input
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="w-full p-2 rounded-md bg-neutral-700 text-white mb-4"
+        className="w-full p-4 rounded-lg bg-neutral-700 text-white focus:outline-none focus:ring-2 focus:ring-red-400 mb-6"
         placeholder="Enter blog title..."
       />
 
       {/* Category Dropdown */}
-      <label className="block mb-2 text-gray-400">Category</label>
+      <label className="block mb-3 text-sm text-gray-300">Category</label>
       <select
         value={category}
         onChange={(e) => setCategory(e.target.value)}
-        className="w-full p-2 rounded-md bg-neutral-700 text-white mb-4"
+        className="w-full p-4 rounded-lg bg-neutral-700 text-white focus:outline-none focus:ring-2 focus:ring-red-400 mb-6"
       >
         <option value="">Select Category</option>
         <option value="Technology">Technology</option>
@@ -85,25 +94,28 @@ export default function BlogForm() {
       </select>
 
       {/* Thumbnail Input */}
-      <label className="block mb-2 text-gray-400">Thumbnail URL</label>
+      <label className="block mb-3 text-sm text-gray-300">Thumbnail URL</label>
       <input
         type="text"
         value={thumbnail}
         onChange={(e) => setThumbnail(e.target.value)}
-        className="w-full p-2 rounded-md bg-neutral-700 text-white mb-4"
+        className="w-full p-4 rounded-lg bg-neutral-700 text-white focus:outline-none focus:ring-2 focus:ring-red-400 mb-6"
         placeholder="Enter thumbnail URL..."
       />
 
       {/* Rich Text Editor */}
-      <label className="block mb-2 text-gray-400">Content</label>
+      <label className="block mb-3 text-sm text-gray-300">Content</label>
       <RichTextEditor onChange={setContent} />
 
       {/* Save Button */}
       <button
         onClick={handleSave}
-        className="mt-6 px-4 py-2 bg-red-400 rounded-md hover:bg-red-500"
+        className={`px-6 py-3 mt-6 text-lg font-semibold rounded-lg transition-all duration-300 ${
+          loading ? "bg-gray-500" : "bg-red-500 hover:bg-red-600"
+        }`}
+        disabled={loading}
       >
-        Save Blog
+        {loading ? "Saving..." : "Save Blog"}
       </button>
     </div>
   );

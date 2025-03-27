@@ -66,44 +66,76 @@ export default function BlogListPage() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-900 text-white flex flex-col items-center p-4 gap-4">
-      <div className="w-full border-b border-neutral-700 pb-4">
-        <h1 className="text-2xl font-semibold">Your Blogs</h1>
-      </div>
+    <div className="flex justify-center min-h-screen">
+      <div className="bg-neutral-900 text-white flex flex-col items-center p-4 gap-4 max-w-full md:max-w-6xl">
+        {/* Header Section */}
+        <div className="w-full border-b border-neutral-700 pb-4">
+          <h1 className="text-2xl font-semibold">Your Blogs</h1>
+        </div>
 
-      <div className="grid grid-cols-4 w-full px-4 bg-neutral-800 py-3 items-center rounded-lg">
-        <div className="text-left font-semibold flex items-center space-x-2">
-          <span>Title</span>
+        {/* Table-like Header for Blog Information */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 w-full px-4 bg-neutral-800 py-3 items-center rounded-lg mb-4">
+          <div className="flex items-center space-x-2 text-left font-semibold">
+            <span>Title</span>
+          </div>
+          <div className="flex items-center justify-center space-x-2 text-center font-semibold">
+            <FaInfoCircle size={16} />
+            <span>Status</span>
+          </div>
+          <div className="flex items-center justify-center space-x-2 text-center font-semibold">
+            <FaCalendarAlt size={16} />
+            <span>Published At</span>
+          </div>
+          <div className="flex items-center justify-end space-x-2 text-right font-semibold">
+            <FaEllipsisH size={16} />
+          </div>
         </div>
-        <div className="text-center font-semibold flex items-center justify-center space-x-2">
-          <FaInfoCircle size={16} /> <span>Status</span>
-        </div>
-        <div className="text-center font-semibold flex items-center justify-center space-x-2">
-          <FaCalendarAlt size={16} /> <span>Published At</span>
-        </div>
-        <div className="text-right font-semibold flex items-center justify-end space-x-2">
-          <FaEllipsisH size={16} />
-        </div>
-      </div>
 
-      <div className="w-full">
-        {isLoading
-          ? [...Array(3)].map((_, index) => (
-              <div
-                key={index}
-                className="bg-neutral-800 p-4 rounded-lg shadow-md w-full mb-4 animate-pulse"
-              >
-                <div className="h-4 bg-gray-700 rounded w-48"></div>
-              </div>
-            ))
-          : userBlogs.map((blog) => (
-              <BlogCard
-                key={blog.id}
-                blog={blog}
-                onTogglePublish={handleTogglePublish}
-                onDelete={handleDelete}
-              />
-            ))}
+        {/* Blog Cards or Skeleton Loader */}
+        <div className="w-full">
+          {isLoading
+            ? [...Array(3)].map((_, index) => (
+                <div
+                  key={index}
+                  className="grid grid-cols-1 md:grid-cols-4 gap-6 bg-neutral-800 p-4 rounded-lg shadow-md w-full mb-4 animate-pulse"
+                >
+                  {/* Placeholder for title */}
+                  <div className="flex items-center space-x-4 col-span-1">
+                    <div className="h-16 w-16 bg-gray-700 rounded-lg"></div>
+                    <div className="space-y-2 w-full">
+                      <div className="h-4 bg-gray-700 rounded w-48"></div>
+                      <div className="h-4 bg-gray-700 rounded w-32"></div>
+                      <div className="h-4 bg-gray-700 rounded w-24"></div>
+                    </div>
+                  </div>
+
+                  {/* Placeholder for status */}
+                  <div className="text-center">
+                    <div className="h-6 w-24 bg-gray-700 rounded-full"></div>
+                  </div>
+
+                  {/* Placeholder for date */}
+                  <div className="text-center">
+                    <div className="h-4 bg-gray-700 rounded w-32 mx-auto"></div>
+                  </div>
+
+                  {/* Placeholder for actions */}
+                  <div className="flex items-center justify-end space-x-3 text-gray-400">
+                    <div className="h-6 w-6 bg-gray-700 rounded"></div>
+                    <div className="h-6 w-6 bg-gray-700 rounded"></div>
+                    <div className="h-6 w-6 bg-gray-700 rounded"></div>
+                  </div>
+                </div>
+              ))
+            : userBlogs.map((blog) => (
+                <BlogCard
+                  key={blog.id}
+                  blog={blog}
+                  onTogglePublish={handleTogglePublish}
+                  onDelete={handleDelete}
+                />
+              ))}
+        </div>
       </div>
     </div>
   );
