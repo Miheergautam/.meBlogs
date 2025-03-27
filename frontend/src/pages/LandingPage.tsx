@@ -1,29 +1,53 @@
 import NavBar from "../components/LandingPage/NavBar";
-
 import { useNavigate } from "react-router-dom";
+import FloatingCardSection from "../components/LandingPage/FloatingCardSection";
+import Footer from "../components/LandingPage/Footer"; // Import Footer
 
 export default function LandingPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col h-screen bg-neutral-900">
+    <div className="flex flex-col min-h-screen bg-neutral-900 text-white">
       <NavBar />
-      <div className="flex flex-col justify-center items-center text-white h-screen">
-        <h1 className="text-4xl font-bold py-2">
-          Publish your passions, your way
-        </h1>
-        <p className="text-xl">Create a unique and beautiful blog easily.</p>
-        <div className="py-5">
-          <button
-            className="bg-red-400 text-white px-4 py-2 rounded-md hover:bg-red-500"
-            onClick={() => {
-              navigate("dashboard");
-            }}
-          >
-            CREATE A BLOG
-          </button>
+
+      {/* Main Section */}
+      <div className="flex flex-col-reverse lg:grid lg:grid-cols-5 items-center px-6 lg:px-16 py-12 flex-grow">
+        {/* Hero Section */}
+        <div className="col-span-3 text-center lg:text-left">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
+            We help you{" "}
+            <span className="bg-red-500 text-white px-3 py-1 rounded-md">
+              write
+            </span>{" "}
+            & share your stories.
+          </h1>
+
+          <p className="text-lg md:text-xl mt-4 max-w-md md:max-w-lg opacity-90">
+            Create, publish, and inspire with the most elegant blogging
+            platform.
+          </p>
+
+          <div className="mt-6 flex flex-col sm:flex-row gap-4 items-center">
+            <button
+              className="bg-white text-red-500 font-semibold px-6 py-3 rounded-full text-lg shadow-lg hover:bg-red-500 hover:text-white transition duration-300 w-full sm:w-auto"
+              onClick={() => navigate("/dashboard")}
+            >
+              Start Writing
+            </button>
+            <button className="bg-neutral-800 text-white font-semibold px-6 py-3 rounded-full text-lg shadow-lg hover:bg-neutral-700 transition duration-300 w-full sm:w-auto">
+              Learn More
+            </button>
+          </div>
+        </div>
+
+        {/* Floating Card Section (Appears on top in mobile view) */}
+        <div className="col-span-2 col-start-4 w-full flex justify-center lg:justify-end mb-10 lg:mb-0">
+          <FloatingCardSection />
         </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
