@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { HiMenu } from "react-icons/hi";
-import { IoClose } from "react-icons/io5";
 
 export default function BlogNavBar() {
   const [activeTab, setActiveTab] = useState("For you");
