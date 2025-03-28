@@ -1,12 +1,11 @@
-import { useUser } from "../hooks";
-import { useGetBlogsQuery } from "../redux/services/meBlogsApi";
+import { useGetBlogsQuery, useGetUserQuery } from "../redux/services/meBlogsApi";
 import BlogCard from "../components/YourBlogs/BlogCard";
 import { FaInfoCircle, FaCalendarAlt, FaEllipsisH } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function BlogListPage() {
-  const { user } = useUser();
+  const { data: user} = useGetUserQuery(); 
   const { data, isLoading, refetch } = useGetBlogsQuery(); // Add refetch to get latest data
   const [userBlogs, setUserBlogs] = useState(data ?? []);
 
