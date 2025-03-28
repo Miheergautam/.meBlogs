@@ -41,7 +41,7 @@ export const useBlog = ({ id }: { id: number }) => {
             },
           }
         );
-        setBlog(response.data.blog);
+        setBlog((response.data as { blog: Blog }).blog);
       } catch (error) {
         console.error("Error fetching blogs:", error);
       } finally {
@@ -70,7 +70,7 @@ export const useBlogs = () => {
             },
           }
         );
-        setBlogs(response.data.blogs);
+        setBlogs((response.data as { blogs: Blog[] }).blogs);
       } catch (error) {
         console.error("Error fetching blogs:", error);
       } finally {
@@ -99,7 +99,7 @@ export const useUser = () => {
             },
           }
         );
-        setUser(response.data.user);
+        setUser((response.data as { user: User }).user);
       } catch (error) {
         console.error("Error fetching user:", error);
       } finally {
