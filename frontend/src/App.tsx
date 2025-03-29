@@ -21,33 +21,33 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/signin" element={<SigninPage />} />
-        <Route path="/signup" element={<SignupPage />} />
+      <BrowserRouter>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/signin" element={<SigninPage />} />
+          <Route path="/signup" element={<SignupPage />} />
 
-        {/* Public Blog Routes */}
-        <Route element={<BlogLayout />}>
-          <Route path="/blogs" element={<BlogsPage />} />
-          <Route path="/blog/:id" element={<BlogDetailPage />} />
-        </Route>
+          {/* Public Blog Routes */}
+          <Route element={<BlogLayout />}>
+            <Route path="/blogs" element={<BlogsPage />} />
+            <Route path="/blog/:id" element={<BlogDetailPage />} />
+          </Route>
 
-        {/* Protected Routes */}
-        <Route path="/dashboard" element={<ProtectedRoute />}>
-          <Route element={<DashboardLayout />}>
-            <Route path="newpost" element={<NewPostPage />} />
-            <Route path="edit/:id" element={<EditBlogPage />} />
-            <Route path="bloglist" element={<BlogListPage />} />
+          {/* Protected Routes */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<DashboardLayout />}>
+              <Route path="newpost" element={<NewPostPage />} />
+              <Route path="edit/:id" element={<EditBlogPage />} />
+              <Route path="bloglist" element={<BlogListPage />} />
 
-            <Route element={<ProfileLayout />}>
-              <Route path="profile" element={<ProfilePage />} />
+              <Route element={<ProfileLayout />}>
+                <Route path="profile" element={<ProfilePage />} />
+              </Route>
             </Route>
           </Route>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
   );
 }
 
