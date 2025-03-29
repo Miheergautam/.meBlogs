@@ -6,7 +6,7 @@ import axios from "axios";
 
 export default function BlogListPage() {
   const { data: user} = useGetUserQuery(); 
-  const { data, isLoading, refetch } = useGetBlogsQuery(); // Add refetch to get latest data
+  const { data, isLoading, refetch } = useGetBlogsQuery();
   const [userBlogs, setUserBlogs] = useState(data ?? []);
 
   useEffect(() => {

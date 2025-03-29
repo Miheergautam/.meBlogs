@@ -23,24 +23,24 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/signup" element={<SignupPage />} />
 
         {/* Public Blog Routes */}
-        <Route element={<ProtectedRoute />}>
-          <Route element={<BlogLayout />}>
-            <Route path="/blogs" element={<BlogsPage />} />
-            <Route path="/blog/:id" element={<BlogDetailPage />} />
-          </Route>
+        <Route element={<BlogLayout />}>
+          <Route path="/blogs" element={<BlogsPage />} />
+          <Route path="/blog/:id" element={<BlogDetailPage />} />
+        </Route>
 
-          {/* Protected Dashboard Routes */}
-          <Route path="/dashboard" element={<DashboardLayout />}>
+        {/* Protected Routes */}
+        <Route path="/dashboard" element={<ProtectedRoute />}>
+          <Route element={<DashboardLayout />}>
             <Route path="newpost" element={<NewPostPage />} />
             <Route path="edit/:id" element={<EditBlogPage />} />
-
             <Route path="bloglist" element={<BlogListPage />} />
-            <Route path="settings" element={<NewPostPage />} />
+
             <Route element={<ProfileLayout />}>
               <Route path="profile" element={<ProfilePage />} />
             </Route>
