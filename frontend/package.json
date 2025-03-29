@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "homepage": ".",
     "@miheer_gautam4/.meblogs-common": "^1.0.2",
     "@reduxjs/toolkit": "^2.6.1",
     "@shadcn/ui": "^0.0.4",
