@@ -5,13 +5,14 @@ import tailwindcss from "@tailwindcss/vite";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  base: "/",  // Ensures correct paths
+  build: {
+    outDir: "dist", // Vercel expects the built files in "dist"
+    emptyOutDir: true
+  },
   server: {
     port: 3000
   },
-  build: {
-    outDir: "dist"
-  },
-  base: "/",
   resolve: {
     alias: {
       "@": "/src"
