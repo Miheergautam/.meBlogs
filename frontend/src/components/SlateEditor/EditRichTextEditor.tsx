@@ -149,8 +149,8 @@ const EditRichTextEditor: React.FC<{
         placeholder="Write your blog post..."
         renderLeaf={(props) => <Leaf {...props} />}
         renderElement={(props) => <Element {...props} />}
-        className="p-4 bg-neutral-700 rounded-md text-white focus:outline-none min-h-[200px] max-w-5xl w-full overflow-auto"
-      />
+        className="p-3 bg-neutral-700 rounded-md max-h-[200px] min-h-[200px] max-w-5xl w-full overflow-auto focus:outline-none"
+        />
     </Slate>
   );
 };
