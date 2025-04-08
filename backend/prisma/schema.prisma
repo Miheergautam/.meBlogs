@@ -13,26 +13,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-  id          Int    @id @default(autoincrement())
-  name        String?
-  email       String @unique
-  password    String
-  bio         String?       // New field
-  profileImage String?      // New field
-  blogs       Blog[]
+model User {
+  id           Int     @id @default(autoincrement())
+  name         String?
+  email        String  @unique
+  password     String?
+  bio          String? // New field
+  profileImage String? // New field
+  blogs        Blog[]
+  likes        Like[] // Relation: One user can like many blogs
 }
 
-model Blog{
-  id         Int     @id @default(autoincrement())
-  title      String
-  content    Json
-  published  Boolean @default(false)
-  thumbnail  String?
-  author     User    @relation(fields: [authorId], references: [id])
-  authorId   Int
-  category   String?
-  createdAt  DateTime @default(now()) // New field
-  updatedAt  DateTime? @updatedAt      // New field
+model Blog {
+  id        Int       @id @default(autoincrement())
+  title     String
+  content   Json
+  published Boolean   @default(false)
+  thumbnail String?
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  Int
+  category  String?
+  createdAt DateTime  @default(now()) // New field
+  updatedAt DateTime? @updatedAt // New field
+  likes     Like[] // Relation: One blog can have many likes
+}
 
+model Like {
+  id        Int      @id @default(autoincrement())
+  blogId    Int
+  userId    Int
+  createdAt DateTime @default(now())
+  blog      Blog     @relation(fields: [blogId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([blogId, userId])
 }

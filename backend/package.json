@@ -5,14 +5,18 @@
     "deploy": "wrangler deploy --minify"
   },
   "dependencies": {
+    "@hono/oauth-providers": "^0.7.0",
     "@miheer_gautam4/.meblogs-common": "^1.0.3",
     "@prisma/client": "^6.2.1",
     "@prisma/extension-accelerate": "^1.2.1",
-    "hono": "^4.6.18",
+    "bcryptjs": "^3.0.2",
+    "googleapis": "^148.0.0",
+    "hono": "^4.7.5",
     "prisma": "^6.2.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250109.0",
-    "wrangler": "^3.101.0"
+    "@types/openid-client": "^3.1.6",
+    "wrangler": "^4.6.0"
   }
 }
