@@ -30,6 +30,10 @@ const SigninPage = () => {
     }
   };
 
+/*   const handleGoogleLogin = () => {
+    window.location.href = 'http://localhost:8787/api/v1/auth/google';
+  }; */
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-neutral-900 text-white px-4 sm:px-6 md:px-8">
       <div className="w-full max-w-md sm:max-w-sm md:max-w-md bg-neutral-800 p-6 sm:p-8 rounded-2xl shadow-lg border border-neutral-700 relative">
@@ -94,6 +98,15 @@ const SigninPage = () => {
             {isLoading ? "Signing in..." : "Sign In"}
           </button>
         </form>
+
+        {/* Google Sign-In Button */}
+        {/* <button
+          onClick={handleGoogleLogin}
+          className="mt-4 w-full py-2.5 sm:py-3 rounded-full bg-blue-500 hover:bg-blue-600 font-semibold transition-all flex items-center justify-center gap-2"
+        >
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" alt="Google" className="w-5 h-5" />
+          Continue with Google
+        </button> */}
 
         <p className="text-center text-neutral-400 mt-4 text-sm">
           Don't have an account?{" "}
