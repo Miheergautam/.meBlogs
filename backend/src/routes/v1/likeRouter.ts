@@ -41,5 +41,6 @@ likeRouter.use("/*", async (c, next) => {
 likeRouter.post("/:blogId/like", likeFunctions.createLike);
 likeRouter.delete("/:blogId/unlike", likeFunctions.deleteLike);
 likeRouter.get("/:blogId/likes", likeFunctions.getLikes);
+likeRouter.get("/:blogId/status", likeFunctions.getLikeStatus);
 
 export default likeRouter;

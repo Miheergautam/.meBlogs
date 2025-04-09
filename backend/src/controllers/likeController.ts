@@ -12,7 +12,9 @@ type AppBindings = {
 };
 
 const getPrisma = (c: Context<AppBindings>) =>
-  new PrismaClient({ datasourceUrl: c.env.DATABASE_URL }).$extends(withAccelerate());
+  new PrismaClient({ datasourceUrl: c.env.DATABASE_URL }).$extends(
+    withAccelerate()
+  );
 
 const createLike = async (c: Context<AppBindings>) => {
   try {
@@ -79,10 +81,36 @@ const getLikes = async (c: Context<AppBindings>) => {
   }
 };
 
+const getLikeStatus = async (c: Context<AppBindings>) => {
+  try {
+    const blogId = Number(c.req.param("blogId"));
+    const userId = Number(c.req.query("userId"));
+
+    if (!userId || !blogId) {
+      return c.json({ message: "Missing userId or blogId" }, 400);
+    }
+
+    const prisma = getPrisma(c);
+
+    const like = await prisma.like.findFirst({
+      where: {
+        blogId: blogId,
+        userId: userId,
+      },
+    });
+
+    return c.json({ liked: !!like });
+  } catch (err) {
+    console.error("Error checking like status:", err);
+    return c.json({ message: "Internal server error" }, 500);
+  }
+};
+
 const likeFunctions = {
   createLike,
   deleteLike,
   getLikes,
+  getLikeStatus,
 };
 
 export default likeFunctions;
