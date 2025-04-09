@@ -1,8 +1,15 @@
 import { Blog } from "../../redux/services/meBlogsApi";
 import { FaLinkedin, FaInstagram, FaTwitter, FaGithub } from "react-icons/fa";
 import { Descendant } from "slate";
+import SocialBar from "./SocialBar";
+import { useGetBlogQuery } from "../../redux/services/meBlogsApi";
+import { useParams } from "react-router-dom";
 
 export default function FullBlog({ blog }: { blog: Blog }) {
+  const { id } = useParams();
+  const blogId = id ? parseInt(id) : 0;
+  const { refetch } = useGetBlogQuery(blogId);
+
   // Function to render JSON content properly
   const renderContent = (content: string | Descendant[]) => {
     let nodes: Descendant[];
@@ -82,12 +89,16 @@ export default function FullBlog({ blog }: { blog: Blog }) {
       <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Blog Content - 75% */}
         <div className="col-span-3 bg-neutral-900 p-8 rounded-xl shadow-lg flex flex-col">
-          <h1 className="text-5xl font-extrabold text-gray-100 mb-6">{blog?.title}</h1>
+          <h1 className="text-5xl font-extrabold text-gray-100 mb-6">
+            {blog?.title}
+          </h1>
           <p className="text-sm text-gray-400 mb-4 flex justify-between items-center">
             <span>
               By{" "}
-              <span className="text-red-400 font-bold">{blog?.author?.name}</span> •{" "}
-              {new Date(blog?.createdAt).toDateString()}
+              <span className="text-red-400 font-bold">
+                {blog?.author?.name}
+              </span>{" "}
+              • {new Date(blog?.createdAt).toDateString()}
             </span>
             <span className="text-red-400 font-medium bg-neutral-800 px-3 py-1 rounded-xl border border-neutral-700">
               {blog?.category}
@@ -100,6 +111,10 @@ export default function FullBlog({ blog }: { blog: Blog }) {
               className="w-full h-full object-cover"
             />
           </div>
+
+          {/* 🔘 Like, Comment, Share - Save Button Section */}
+          <SocialBar refetch={refetch} />
+
           <article className="prose prose-invert text-gray-300 leading-relaxed">
             {renderContent(blog?.content)}
           </article>
@@ -117,8 +132,12 @@ export default function FullBlog({ blog }: { blog: Blog }) {
               className="w-full h-full object-cover"
             />
           </div>
-          <h2 className="text-xl font-semibold text-gray-100">{blog?.author?.name}</h2>
-          <p className="text-gray-500 text-sm">@{blog?.author?.email.split("@")[0]}</p>
+          <h2 className="text-xl font-semibold text-gray-100">
+            {blog?.author?.name}
+          </h2>
+          <p className="text-gray-500 text-sm">
+            @{blog?.author?.email.split("@")[0]}
+          </p>
           <p className="text-gray-400 text-center mt-4 italic">
             {blog?.author?.bio || "No Bio Available"}
           </p>

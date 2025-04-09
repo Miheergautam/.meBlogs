@@ -31,6 +31,15 @@ export interface AuthResponse {
   user: User;
 }
 
+export interface Like {
+  id: number;
+  blogId: number;
+  userid: number;
+  createdAt: string;
+  blog: Blog;
+  user: User;
+}
+
 // Define the base URL
 const BASE_URL = "https://backend.miheergautam04.workers.dev/api/v1";
 
@@ -50,7 +59,10 @@ export const meBlogsApi = createApi({
   tagTypes: ["User", "Blogs"],
   endpoints: (builder) => ({
     // 📌 Register a new user ----- -Done
-    registerUser: builder.mutation<{ message: string }, { name: string; email: string; password: string }>({
+    registerUser: builder.mutation<
+      { message: string },
+      { name: string; email: string; password: string }
+    >({
       query: (userData) => ({
         url: "/auth/register",
         method: "POST",
@@ -59,7 +71,10 @@ export const meBlogsApi = createApi({
     }),
 
     // 📌 Login user ------- Done
-    loginUser: builder.mutation<{ token: string }, { email: string; password: string }>({
+    loginUser: builder.mutation<
+      { token: string },
+      { email: string; password: string }
+    >({
       query: (credentials) => ({
         url: "/auth/login",
         method: "POST",
@@ -69,9 +84,9 @@ export const meBlogsApi = createApi({
         try {
           const response = await queryFulfilled;
           const token = response?.data?.token;
-    
+
           if (token) {
-            localStorage.setItem("token",`Bearer ${token}`);
+            localStorage.setItem("token", `Bearer ${token}`);
             dispatch(meBlogsApi.util.invalidateTags(["User"]));
           }
         } catch (err) {
@@ -79,7 +94,6 @@ export const meBlogsApi = createApi({
         }
       },
     }),
-    
 
     // 📌 Logout user
     logoutUser: builder.mutation<{ message: string }, void>({
@@ -137,7 +151,10 @@ export const meBlogsApi = createApi({
     }),
 
     // 📌 Update an existing blog
-    updateBlog: builder.mutation<Blog, { id: number; updatedBlog: Partial<Blog> }>({
+    updateBlog: builder.mutation<
+      Blog,
+      { id: number; updatedBlog: Partial<Blog> }
+    >({
       query: ({ id, updatedBlog }) => ({
         url: `/blogs/${id}`,
         method: "PUT",
@@ -155,6 +172,34 @@ export const meBlogsApi = createApi({
       }),
       invalidatesTags: ["Blogs"],
     }),
+
+    likeBlog: builder.mutation<Like, { blogId: number; userId: number }>({
+      query: ({ blogId, userId }) => ({
+        url: `/likes/${blogId}/like`,
+        method: "POST",
+        body: { userId },
+      }),
+      invalidatesTags: ["Blogs"],
+    }),
+    
+
+    unlikeBlog: builder.mutation<{ message: string }, { blogId: number; userId: number }>({
+      query: ({ blogId, userId }) => ({
+        url: `/likes/${blogId}/unlike`,
+        method: "DELETE",
+        body: { userId }, // ✅ send userId in body
+      }),
+      invalidatesTags: ["Blogs"],
+    }),
+    
+    getLikesForBlog: builder.query<Like[], number>({
+      query: (blogId) => `/blogs/${blogId}/likes`,
+    }),
+
+    getLikeStatus: builder.query<{ liked: boolean }, { blogId: number; userId: number }>({
+      query: ({ blogId, userId }) => `/likes/${blogId}/status?userId=${userId}`,
+    }),
+    
   }),
 });
 
@@ -170,4 +215,8 @@ export const {
   useCreateBlogMutation,
   useUpdateBlogMutation,
   useDeleteBlogMutation,
+  useLikeBlogMutation,
+  useUnlikeBlogMutation,
+  useGetLikesForBlogQuery,
+  useGetLikeStatusQuery
 } = meBlogsApi;
