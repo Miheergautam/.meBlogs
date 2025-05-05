@@ -25,42 +25,61 @@ export default function NavBar() {
         {/* Desktop Navigation */}
         <div className="hidden md:flex gap-6 text-white text-sm font-medium">
           <div
-            className="relative cursor-pointer"
+            className="relative cursor-pointer pb-2"
             onMouseEnter={() => setDropdownOpen("product")}
             onMouseLeave={() => setDropdownOpen(null)}
           >
             <span className="hover:text-red-400 transition">Product ▾</span>
             {dropdownOpen === "product" && (
-              <div className="absolute top-full left-0 mt-2 bg-neutral-800 shadow-lg p-2 rounded-md">
-                <Link to="/features" className="block px-4 py-2 hover:bg-neutral-700">
+              <div className="absolute top-full left-0  bg-neutral-800 shadow-lg p-2 rounded-md z-10">
+                <Link
+                  to="/features"
+                  className="block px-4 py-2 hover:bg-neutral-700"
+                >
                   Features
                 </Link>
-                <Link to="/pricing" className="block px-4 py-2 hover:bg-neutral-700">
+                <Link
+                  to="/pricing"
+                  className="block px-4 py-2 hover:bg-neutral-700"
+                >
                   Pricing
                 </Link>
               </div>
             )}
           </div>
+          {/* Explore Link */}
           <Link to="/explore" className="hover:text-red-400 transition">
             Explore
           </Link>
+
+          {/* Resources Dropdown */}
           <div
-            className="relative cursor-pointer"
+            className="relative cursor-pointer pb-2"
             onMouseEnter={() => setDropdownOpen("resources")}
             onMouseLeave={() => setDropdownOpen(null)}
           >
-            <span className="hover:text-red-400 transition">Resources ▾</span>
+            <div>
+              <span className="hover:text-red-400 transition">Resources ▾</span>
+            </div>
             {dropdownOpen === "resources" && (
-              <div className="absolute top-full left-0 mt-2 bg-neutral-800 shadow-lg p-2 rounded-md">
-                <Link to="/blog" className="block px-4 py-2 hover:bg-neutral-700">
+              <div className="absolute top-full left-0 bg-neutral-800 shadow-lg p-2 rounded-md z-10">
+                <Link
+                  to="/blog"
+                  className="block px-4 py-2 hover:bg-neutral-700"
+                >
                   Blog
                 </Link>
-                <Link to="/docs" className="block px-4 py-2 hover:bg-neutral-700">
+                <Link
+                  to="/docs"
+                  className="block px-4 py-2 hover:bg-neutral-700"
+                >
                   Documentation
                 </Link>
               </div>
             )}
           </div>
+
+          {/* About Link */}
           <Link to="/pricing" className="hover:text-red-400 transition">
             About
           </Link>
@@ -69,14 +88,17 @@ export default function NavBar() {
         {/* Right Section */}
         <div className="hidden md:flex items-center gap-4">
           <IoSearch className="text-gray-400 text-lg cursor-pointer hover:text-white" />
-          <Link to="/signin" className="text-gray-400 hover:text-white transition text-sm">
+          <Link
+            to="/signin"
+            className="text-gray-400 hover:text-white transition text-sm"
+          >
             Sign In
           </Link>
           <Link
-            to="/get-started"
+            to="/signup"
             className="bg-white text-neutral-900 font-semibold text-sm px-4 py-2 rounded-md shadow-md hover:bg-red-500 hover:text-white transition"
           >
-            Get Started — free
+            Get Started
           </Link>
         </div>
 
@@ -97,15 +119,23 @@ export default function NavBar() {
           </Link>
           <div
             className="cursor-pointer"
-            onClick={() => setDropdownOpen(dropdownOpen === "product" ? null : "product")}
+            onClick={() =>
+              setDropdownOpen(dropdownOpen === "product" ? null : "product")
+            }
           >
             Product ▾
             {dropdownOpen === "product" && (
               <div className="mt-2 bg-neutral-700 shadow-lg p-2 rounded-md">
-                <Link to="/features" className="block px-4 py-2 hover:bg-neutral-600">
+                <Link
+                  to="/features"
+                  className="block px-4 py-2 hover:bg-neutral-600"
+                >
                   Features
                 </Link>
-                <Link to="/pricing" className="block px-4 py-2 hover:bg-neutral-600">
+                <Link
+                  to="/pricing"
+                  className="block px-4 py-2 hover:bg-neutral-600"
+                >
                   Pricing
                 </Link>
               </div>
@@ -113,15 +143,23 @@ export default function NavBar() {
           </div>
           <div
             className="cursor-pointer"
-            onClick={() => setDropdownOpen(dropdownOpen === "resources" ? null : "resources")}
+            onClick={() =>
+              setDropdownOpen(dropdownOpen === "resources" ? null : "resources")
+            }
           >
             Resources ▾
             {dropdownOpen === "resources" && (
               <div className="mt-2 bg-neutral-700 shadow-lg p-2 rounded-md">
-                <Link to="/blog" className="block px-4 py-2 hover:bg-neutral-600">
+                <Link
+                  to="/blog"
+                  className="block px-4 py-2 hover:bg-neutral-600"
+                >
                   Blog
                 </Link>
-                <Link to="/docs" className="block px-4 py-2 hover:bg-neutral-600">
+                <Link
+                  to="/docs"
+                  className="block px-4 py-2 hover:bg-neutral-600"
+                >
                   Documentation
                 </Link>
               </div>
@@ -132,7 +170,10 @@ export default function NavBar() {
           </Link>
           <div className="flex gap-4 items-center">
             <IoSearch className="text-gray-400 text-lg cursor-pointer hover:text-white" />
-            <Link to="/signin" className="text-gray-400 hover:text-white transition text-sm">
+            <Link
+              to="/signin"
+              className="text-gray-400 hover:text-white transition text-sm"
+            >
               Sign In
             </Link>
             <Link
