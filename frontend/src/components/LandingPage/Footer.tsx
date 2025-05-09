@@ -2,12 +2,14 @@ import { FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-neutral-800 text-neutral-300 mt-20 py-6 px-8">
+    <footer className="bg-neutral-800 text-neutral-300 mt-20 p-4">
       <div className="container mx-auto px-6 lg:px-16 grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
         {/* Branding & Tagline */}
         <div className="space-y-3">
-          <h2 className="text-2xl font-bold text-red-500">MeBlogs</h2>
-          <p className="text-sm opacity-80">
+          <h2 className="text-2xl font-bold text-red-500">
+            .<span className="text-white">meBlogs</span>
+          </h2>
+          <p className="text-md opacity-80">
             Write. Share. Inspire. The modern blogging platform for everyone.
           </p>
         </div>
@@ -22,8 +24,8 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="/blog" className="hover:text-red-500 transition">
-                Blog
+              <a href="/blogs" className="hover:text-red-500 transition">
+                Explore Blogs
               </a>
             </li>
             <li>
@@ -44,31 +46,32 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="hover:text-red-500 transition"
             >
-              <FaTwitter size={22} />
+              <FaTwitter size={24} />
             </a>
             <a
-              href="https://github.com"
+              href="https://github.com/Miheergautam"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-red-500 transition"
             >
-              <FaGithub size={22} />
+              <FaGithub size={24} />
             </a>
             <a
-              href="https://linkedin.com"
+              href="www.linkedin.com/in/miheer-gautam"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-red-500 transition"
             >
-              <FaLinkedin size={22} />
+              <FaLinkedin size={24} />
             </a>
           </div>
         </div>
       </div>
 
       {/* Copyright Section */}
-      <div className="border-t border-neutral-700 mt-10 pt-5 text-center text-sm opacity-75">
-        &copy; {new Date().getFullYear()} <span className="text-red-500">MeBlogs</span>. All rights reserved.
+      <div className="border-t border-neutral-700 mt-8 pt-5 text-center text-sm opacity-75">
+        &copy; {new Date().getFullYear()}{" "}
+        <span className="text-red-500">.meBlogs</span>. All rights reserved.
       </div>
     </footer>
   );

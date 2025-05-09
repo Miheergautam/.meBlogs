@@ -18,6 +18,7 @@ import ProfileLayout from "./layout/ProfileLayout";
 
 // Protected Route
 import ProtectedRoute from "./components/ProtectedRoute";
+import ComingSoonPage from "./pages/ComingSoonPage";
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
+          <Route path="/about" element={<ComingSoonPage />} />
+          <Route path="/contact" element={<ComingSoonPage />} />
+          
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/signup" element={<SignupPage />} />
 
