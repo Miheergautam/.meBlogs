@@ -18,8 +18,8 @@ model User {
   name         String?
   email        String  @unique
   password     String?
-  bio          String? // New field
-  profileImage String? // New field
+  bio          String? 
+  profileImage String? 
   provider     String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt

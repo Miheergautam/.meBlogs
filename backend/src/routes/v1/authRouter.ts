@@ -2,14 +2,19 @@ import { Hono } from "hono";
 import authFunctions from "../../controllers/authController";
 import { googleAuth } from "@hono/oauth-providers/google";
 import { sign } from 'hono/jwt'
+import { FrontendURL } from "../../URL";
+
+import { PrismaClient } from "@prisma/client/edge";
+import { withAccelerate } from "@prisma/extension-accelerate";
 
 
 type AppBindings = {
   Bindings: {
+    DATABASE_URL: string;
+    JWT_SECRET: string;
     GOOGLE_CLIENT_ID: string;
     GOOGLE_CLIENT_SECRET: string;
     GOOGLE_REDIRECT_URI: string;
-    JWT_SECRET: string;
   };
 };
 
@@ -44,22 +49,44 @@ authRouter.get('/google/callback', async (c) => {
     return c.json({ error: 'User not found' }, 400)
   }
 
+  if (!user?.email || !user?.name) {
+    return c.json({ error: 'Invalid user data' }, 400)
+  }
+
+  console.log(user);
+
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  let existingUser = await prisma.user.findUnique({
+    where: { email: user.email }
+  });
+
+
+  if (!existingUser) {
+    existingUser = await prisma.user.create({
+      data: {
+        email: user.email,
+        name: user.name,
+        profileImage: user.picture || null,
+        provider:"google"
+      }
+    });
+  }
+
   const appToken = await sign(
     {
-      sub: user.email,
-      name: user.name,
-      picture: user.picture,
+      sub: existingUser.id,
+      name: existingUser.name,
+      picture: existingUser.profileImage,
     },
     c.env.JWT_SECRET
   )
 
-  return c.json({
-    token: appToken,
-    user,
-    googleToken: tokenData,
-  })
-})
+  return c.redirect(`${FrontendURL}/oauth-success?token=${appToken}`);
 
+});
 
 
 export default authRouter;
