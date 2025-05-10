@@ -12,7 +12,7 @@ export default function NavBar() {
 
   return (
     <>
-      <div className="bg-neutral-900 shadow-md">
+      <div className="bg-neutral-900 shadow-md w-full">
         <div className="flex justify-between items-center px-6 py-4">
           <div
             className="flex items-center gap-2 cursor-pointer"

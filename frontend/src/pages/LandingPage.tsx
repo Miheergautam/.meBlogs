@@ -16,7 +16,7 @@ export default function LandingPage() {
 
   return (
     <PullToRefresh onRefresh={handleRefresh} style={{ minHeight: "100vh" }}>
-      <div className="absolute flex flex-col min-h-screen bg-neutral-900 text-white">
+      <div className="absolute flex flex-col min-h-screen items-center bg-neutral-900 text-white">
         <NavBar />
 
         {/* Main Section */}
