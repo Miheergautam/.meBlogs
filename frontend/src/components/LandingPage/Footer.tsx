@@ -2,8 +2,8 @@ import { FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="w-full mt-15 bg-neutral-900 text-white py-5 px-6">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-4 gap-8">
+    <footer className="w-full bg-neutral-900 text-white py-5 px-6">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-8">
         {/* Branding */}
         <div>
           <h2 className="text-3xl font-bold text-red-500 mb-2">
@@ -15,7 +15,7 @@ export default function Footer() {
         </div>
 
         {/* Follow Us */}
-        <div>
+        <div className="flex flex-col items-center">
           <h3 className="text-lg font-semibold mb-3">Follow Us</h3>
           <div className="flex space-x-5">
             <a
@@ -46,7 +46,7 @@ export default function Footer() {
         </div>
 
         {/* Quick Links */}
-        <div>
+        <div className="flex flex-col items-center">
           <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
           <ul className="space-y-2 text-sm text-neutral-300">
             <li>
@@ -68,7 +68,7 @@ export default function Footer() {
         </div>
 
         {/* Partners */}
-        <div>
+        <div className="flex flex-col items-center">
           <h3 className="text-lg font-semibold mb-3">Partners</h3>
           <ul className="space-y-2 text-sm text-neutral-300">
             <li>

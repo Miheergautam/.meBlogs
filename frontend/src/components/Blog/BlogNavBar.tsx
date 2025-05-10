@@ -19,7 +19,7 @@ export default function BlogNavBar() {
   }, []);
 
   return (
-    <nav className="px-4 sm:px-6 py-4 border-b border-neutral-700 flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-center relative">
+    <nav className="py-3 border-b border-neutral-700 flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-center relative">
       {/* Top Row (Logo + Menu Button for Mobile) */}
       <div className="w-full flex justify-between items-center sm:hidden">
         <h1 className="text-white text-lg font-bold">MeBlogs</h1>
@@ -32,12 +32,12 @@ export default function BlogNavBar() {
       </div>
 
       {/* Search Bar */}
-      <div className="w-full sm:w-1/2 flex items-center bg-neutral-700 px-4 py-2 rounded-full">
-        <FaSearch className="text-gray-400 mr-2" />
+      <div className="w-full sm:w-1/2 flex items-center bg-neutral-800 hover:ring ring-red-500 transition px-4 py-2 rounded-xl border border-neutral-700">
+        <FaSearch className="text-white mr-2" />
         <input
           type="text"
           placeholder="Search blogs..."
-          className="w-full bg-transparent text-white outline-none placeholder-gray-400"
+          className="w-full bg-transparent text-white outline-none placeholder-white"
         />
       </div>
 
@@ -47,10 +47,10 @@ export default function BlogNavBar() {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 rounded-full transition font-semibold ${
+            className={`px-4 py-2 rounded-xl transition font-semibold ${
               activeTab === tab
                 ? "bg-red-500 text-white shadow-lg"
-                : "text-gray-400 hover:bg-neutral-700 hover:text-white transition"
+                : "text-white hover:bg-neutral-800 transition"
             }`}
           >
             {tab}

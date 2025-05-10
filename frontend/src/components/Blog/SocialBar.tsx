@@ -47,21 +47,29 @@ import {
         toast.error("You must be logged in to like.");
         return;
       }
+    
+      // Optimistically update the UI
+      const previousLiked = hasLiked;
+      setHasLiked(!previousLiked);
+    
       try {
-        if (hasLiked) {
+        if (previousLiked) {
           await unlikeBlog({ blogId, userId }).unwrap();
           toast("💔 Unliked");
         } else {
           await likeBlog({ blogId, userId }).unwrap();
           toast("❤️ Liked");
         }
-        setHasLiked(!hasLiked);
+        // Optionally refetch data after success
         refetch();
       } catch (err) {
+        // Revert optimistic update on error
+        setHasLiked(previousLiked);
         console.error("Like/Unlike error", err);
         toast.error("Something went wrong.");
       }
     };
+    
   
     if (isLikeStatusLoading) return null;
   

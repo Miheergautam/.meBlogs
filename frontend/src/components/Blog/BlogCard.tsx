@@ -43,7 +43,7 @@ export default function BlogsCard({
   imageUrl,
 }: BlogCardProps) {
   return (
-    <div className="border border-neutral-700 rounded-xl overflow-hidden bg-neutral-800 hover:shadow-lg hover:shadow-neutral-800 transition-all duration-300 w-full flex flex-col sm:flex-row hover:scale-[1.02]">
+    <div className="border border-neutral-700 rounded-md overflow-hidden bg-neutral-900 hover:shadow-lg hover:shadow-neutral-800 transition-all duration-300 w-full flex flex-col sm:flex-row hover:scale-[1.02] hover:ring ring-red-500">
       {/* Mobile Layout (Image on top, text below) */}
       <div className="relative sm:hidden">
         <Link to={`/blog/${id}`} className="relative block">
@@ -91,20 +91,20 @@ export default function BlogsCard({
           <div className="flex items-center text-neutral-400 text-sm space-x-2 pb-2">
             <span className="font-semibold text-red-500">{authorName}</span>
             <span>•</span>
-            <span>{new Date(publishedDate).toDateString()}</span>
+            <span className="">{new Date(publishedDate).toDateString()}</span>
           </div>
 
           {/* Title & Preview */}
           <Link to={`/blog/${id}`} className="hover:underline">
-            <h2 className="text-white font-bold text-xl pb-1 hover:text-red-500 transition">
+            <h2 className="text-white font-bold text-2xl pb-1 hover:text-red-500 transition">
               {title}
             </h2>
           </Link>
-          <p className="text-neutral-300 text-sm">{extractPreviewText(content)}</p>
+          <p className="text-neutral-300 text-lg">{extractPreviewText(content)}</p>
 
           {/* Footer */}
           <div className="flex justify-between items-center pt-4">
-            <span className="bg-red-500 text-white text-xs px-3 py-1 rounded-full">
+            <span className="bg-red-500 text-white text-xs px-3 py-1 rounded-md">
               {category}
             </span>
 
@@ -122,7 +122,7 @@ export default function BlogsCard({
             <img
               src={imageUrl}
               alt="Blog"
-              className="w-[250px] h-[200px] object-cover transition-transform duration-300 hover:scale-105"
+              className="w-[250px] h-[250px] object-cover transition-transform duration-300 hover:scale-105"
             />
           </div>
         </Link>

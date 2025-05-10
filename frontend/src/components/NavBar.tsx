@@ -5,6 +5,7 @@ import { CgMenuGridO } from "react-icons/cg";
 import { useNavigate, useLocation } from "react-router-dom";
 import ProfilePopup from "./Profile/ProfilePopup";
 import { useGetUserQuery } from "../redux/services/meBlogsApi";
+import SearchModal from "./LandingPage/SearchModal";
 
 export default function NavBar() {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ export default function NavBar() {
   const { data: user } = useGetUserQuery();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   return (
     <nav className="bg-neutral-900 shadow-md">
@@ -36,7 +38,10 @@ export default function NavBar() {
               Write
             </button>
           )}
-          <IoSearch className="text-gray-400 text-lg cursor-pointer hover:text-white transition" />
+          <IoSearch
+            className="text-gray-400 text-lg cursor-pointer hover:text-white"
+            onClick={() => setSearchOpen(true)}
+          />
           <button className="p-2 rounded-full hover:bg-red-500 transition duration-200">
             <IoHelpCircle className="text-2xl text-white" />
           </button>
@@ -56,7 +61,9 @@ export default function NavBar() {
                 className="w-full h-full object-cover"
               />
             </button>
-            {isProfileOpen && <ProfilePopup onClose={() => setIsProfileOpen(false)} />}
+            {isProfileOpen && (
+              <ProfilePopup onClose={() => setIsProfileOpen(false)} />
+            )}
           </div>
         </div>
 
@@ -87,6 +94,7 @@ export default function NavBar() {
           </button>
         </div>
       )}
+      {searchOpen && <SearchModal onClose={() => setSearchOpen(false)} />}
     </nav>
   );
 }

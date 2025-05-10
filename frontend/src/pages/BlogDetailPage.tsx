@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useGetBlogQuery } from "../redux/services/meBlogsApi";
 import FullBlog from "../components/Blog/FullBlog";
-import { FaLinkedin, FaInstagram, FaTwitter, FaGithub } from "react-icons/fa";
 
 export default function BlogDetailPage() {
   const { id } = useParams();
@@ -51,49 +50,6 @@ export default function BlogDetailPage() {
   return (
     <div>
       <FullBlog blog={blog} />
-
-      {/* Footer */}
-      <footer className="bg-neutral-800 text-gray-400 py-10 px-6">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            <h3 className="text-lg font-semibold text-gray-200 mb-4">About</h3>
-            <p className="text-sm">
-              MeBlogs is a platform to share knowledge, thoughts, and ideas through blogs. Join us and contribute to a growing community of writers.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold text-gray-200 mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><a href="/" className="hover:text-gray-100">Home</a></li>
-              <li><a href="/about" className="hover:text-gray-100">About Us</a></li>
-              <li><a href="/contact" className="hover:text-gray-100">Contact</a></li>
-              <li><a href="/terms" className="hover:text-gray-100">Terms & Conditions</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold text-gray-200 mb-4">Follow Us</h3>
-            <div className="flex space-x-4">
-              <a href="#" target="_blank" rel="noopener noreferrer">
-                <FaLinkedin className="text-gray-400 hover:text-gray-200 text-2xl" />
-              </a>
-              <a href="#" target="_blank" rel="noopener noreferrer">
-                <FaInstagram className="text-gray-400 hover:text-gray-200 text-2xl" />
-              </a>
-              <a href="#" target="_blank" rel="noopener noreferrer">
-                <FaTwitter className="text-gray-400 hover:text-gray-200 text-2xl" />
-              </a>
-              <a href="#" target="_blank" rel="noopener noreferrer">
-                <FaGithub className="text-gray-400 hover:text-gray-200 text-2xl" />
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="text-center text-sm text-gray-500 mt-8">
-          &copy; {new Date().getFullYear()} MeBlogs. All rights reserved.
-        </div>
-      </footer>
     </div>
   );
 }

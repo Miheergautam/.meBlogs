@@ -2,7 +2,6 @@ import { useState } from "react";
 import BlogCard from "../components/Blog/BlogCard";
 import BlogNavBar from "../components/Blog/BlogNavBar";
 import { useGetBlogsQuery } from "../redux/services/meBlogsApi";
-import Footer from "../components/Blog/Footer";
 
 export default function BlogsPage() {
   const { data: blogs, isLoading, error } = useGetBlogsQuery();
@@ -52,52 +51,50 @@ export default function BlogsPage() {
   const publishedBlogs = blogs?.filter((blog) => blog.published) || [];
 
   return (
-    <div className="bg-neutral-900 min-h-screen p-4 sm:p-6 md:p-10">
-      <div className="max-w-4xl mx-auto space-y-6">
+    <div className="min-h-screen flex flex-col items-center p-10">
+      <div className="w-full max-w-6xl">
         <BlogNavBar />
-
-        {publishedBlogs.length > 0 ? (
-          <>
-            <div className="grid gap-6 sm:gap-8">
-              {publishedBlogs.slice(0, visibleCount).map((blog) => (
-                <BlogCard
-                  key={blog.id}
-                  id={blog.id}
-                  authorName={blog.author.name}
-                  title={blog.title}
-                  content={blog.content}
-                  publishedDate={blog.createdAt}
-                  category={blog.category}
-                  imageUrl={blog.thumbnail}
-                />
-              ))}
-            </div>
-
-            {/* Show More Button */}
-            {visibleCount < publishedBlogs.length && (
-              <div className="flex justify-center mt-6">
-                <button
-                  onClick={() => setVisibleCount((prev) => prev + 3)}
-                  className="px-5 sm:px-6 py-2 bg-red-500 text-white rounded-full font-semibold hover:bg-red-600 transition duration-300"
-                >
-                  Show More
-                </button>
-              </div>
-            )}
-          </>
-        ) : (
-          <div className="text-white text-center text-lg px-4">
-            <p className="text-gray-400">No published blogs found.</p>
-            <p className="text-gray-500">
-              Start writing and share your thoughts with the world!
-            </p>
-          </div>
-        )}
       </div>
+      <div className="bg-neutral-900 p-4 sm:p-6 md:p-10">
+        <div className="mx-auto space-y-6">
+          {publishedBlogs.length > 0 ? (
+            <>
+              <div className="grid gap-6 sm:gap-8">
+                {publishedBlogs.slice(0, visibleCount).map((blog) => (
+                  <BlogCard
+                    key={blog.id}
+                    id={blog.id}
+                    authorName={blog.author.name}
+                    title={blog.title}
+                    content={blog.content}
+                    publishedDate={blog.createdAt}
+                    category={blog.category}
+                    imageUrl={blog.thumbnail}
+                  />
+                ))}
+              </div>
 
-      {/* Footer Section */}
-      <div className="mt-10">
-        <Footer />
+              {/* Show More Button */}
+              {visibleCount < publishedBlogs.length && (
+                <div className="flex justify-center mt-6">
+                  <button
+                    onClick={() => setVisibleCount((prev) => prev + 3)}
+                    className="px-5 sm:px-6 py-2 bg-red-500 text-white rounded-full font-semibold hover:bg-red-600 transition duration-300"
+                  >
+                    Show More
+                  </button>
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="text-white text-center text-lg px-4">
+              <p className="text-gray-400">No published blogs found.</p>
+              <p className="text-gray-500">
+                Start writing and share your thoughts with the world!
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

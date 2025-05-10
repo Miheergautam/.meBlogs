@@ -43,6 +43,7 @@ export default function DashboardLayout() {
             <Outlet />
           )}
         </div>
+
       </div>
     </div>
   );

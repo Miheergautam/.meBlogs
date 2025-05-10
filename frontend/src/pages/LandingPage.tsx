@@ -16,11 +16,11 @@ export default function LandingPage() {
 
   return (
     <PullToRefresh onRefresh={handleRefresh} style={{ minHeight: "100vh" }}>
-      <div className="absolute flex flex-col min-h-screen items-center bg-neutral-900 text-white">
+      <div className="flex flex-col min-h-screen items-center bg-neutral-900 text-white">
         <NavBar />
 
         {/* Main Section */}
-        <div className="flex flex-col-reverse lg:grid lg:grid-cols-5 items-center px-6 lg:px-16 py-12 flex-grow">
+        <div className="flex flex-col-reverse lg:grid lg:grid-cols-5 items-center px-6 lg:px-16 py-12 flex-grow mb-14">
           {/* Hero Section */}
           <div className="col-span-3 text-center lg:text-left">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">

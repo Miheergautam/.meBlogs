@@ -27,8 +27,8 @@ export default function SearchModal({ onClose }: Props) {
           <input
             ref={inputRef}
             type="text"
-            placeholder="MeSearch..."
-            className="w-full text-lg px-5 py-3 bg-neutral-700 text-white rounded-xl focus:outline-none placeholder-neutral-300"
+            placeholder=".meSearch..."
+            className="w-full text-lg px-5 py-3 bg-neutral-900 border border-neutral-700 text-white rounded-xl focus:outline-none placeholder-white"
           />
           <button
             onClick={onClose}
@@ -39,7 +39,7 @@ export default function SearchModal({ onClose }: Props) {
           </button>
 
           {/* Default suggestions / helper text */}
-          <div className="mt-1 space-y-2 p-4 rounded-xl text-neutral-300 shadow-2xl bg-neutral-800">
+          <div className="mt-1 space-y-2 p-4 rounded-xl text-white">
             <p className="text-xl">Try searching for:</p>
             <ul className="text-lg list-disc list-inside space-y-1">
               <li>Recent documents or files</li>
