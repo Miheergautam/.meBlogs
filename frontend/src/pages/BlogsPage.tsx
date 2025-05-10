@@ -55,7 +55,7 @@ export default function BlogsPage() {
       <div className="w-full max-w-6xl">
         <BlogNavBar />
       </div>
-      <div className="bg-neutral-900 p-4 sm:p-6 md:p-10">
+      <div className="bg-neutral-900 p-4 sm:p-6 md:p-10 max-w-6xl">
         <div className="mx-auto space-y-6">
           {publishedBlogs.length > 0 ? (
             <>
