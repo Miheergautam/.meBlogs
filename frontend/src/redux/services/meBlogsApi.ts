@@ -24,6 +24,10 @@ export interface User {
   bio: string;
   email: string;
   profileImage: string;
+  instagram?: string;
+  linkedIn?: string;
+  github?: string;
+  twitter?: string;
 }
 
 export interface AuthResponse {
@@ -41,7 +45,7 @@ export interface Like {
 }
 
 // Define the base URL
-const BASE_URL = "https://backend.miheergautam04.workers.dev/api/v1";
+const BASE_URL ="http://localhost:8787/api/v1"; /* "https://backend.miheergautam04.workers.dev/api/v1" */
 
 export const meBlogsApi = createApi({
   reducerPath: "meBlogsApi",
