@@ -20,8 +20,12 @@ model User {
   password     String?
   bio          String? // New field
   profileImage String? // New field
+  provider     String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
   blogs        Blog[]
   likes        Like[] // Relation: One user can like many blogs
+
 }
 
 model Blog {

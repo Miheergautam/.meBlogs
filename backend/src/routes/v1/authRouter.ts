@@ -1,7 +1,8 @@
 import { Hono } from "hono";
 import authFunctions from "../../controllers/authController";
-import { Context } from "hono";
 import { googleAuth } from "@hono/oauth-providers/google";
+import { sign } from 'hono/jwt'
+
 
 type AppBindings = {
   Bindings: {
@@ -19,42 +20,46 @@ authRouter.post("/register", authFunctions.userRegister);
 authRouter.put("/update", authFunctions.updateUser);
 authRouter.get("/get", authFunctions.getUser);
 
-/* // Step 1: Redirect user to Google login
-authRouter.get("/google", (c: Context<AppBindings>) => {
-  const authUrl = `https://accounts.google.com/o/oauth2/auth?client_id=${c.env.GOOGLE_CLIENT_ID}&redirect_uri=${c.env.GOOGLE_REDIRECT_URI}&response_type=code&scope=openid%20email%20profile`;
-
-  return c.redirect(authUrl);
+authRouter.use('/google/*', async (c, next) => {
+  const config = {
+    client_id: c.env.GOOGLE_CLIENT_ID,
+    client_secret: c.env.GOOGLE_CLIENT_SECRET,
+    redirect_uri: c.env.GOOGLE_REDIRECT_URI,
+    scope: ['openid', 'email', 'profile'],
+  };
+  return googleAuth(config)(c, next);
 });
 
-// STEP 2: Handle Google callback and exchange code for user info
-authRouter.get("/google/callback", async (c, next) => {
-  try {
-    const authMiddleware = googleAuth({
-      client_id: c.env.GOOGLE_CLIENT_ID,
-      client_secret: c.env.GOOGLE_CLIENT_SECRET,
-      redirect_uri: c.env.GOOGLE_REDIRECT_URI, // Required for OAuth flow
-      scope: ["openid", "email", "profile"],
-    });
+// This route redirects user to login
+authRouter.get('/google', (c) => {
+  return c.redirect('/google/login')
+})
 
-    // Run the middleware to get auth details
-    await authMiddleware(c, next);
+// Callback handler
+authRouter.get('/google/callback', async (c) => {
+  const user = c.get('user-google')
+  const tokenData = c.get('token')
 
-    // Now retrieve the authenticated user info
-    const token = c.get("token");
-    const user = c.get("user-google");
-
-    if (!user) {
-      return c.json({ error: "Authentication failed" }, 401);
-    }
-
-    return c.json({
-      token,
-      user,
-    });
-  } catch (error) {
-    console.error("OAuth Error:", error);
-    return c.json({ error: "OAuth authentication failed" }, 500);
+  if (!user) {
+    return c.json({ error: 'User not found' }, 400)
   }
-}); */
+
+  const appToken = await sign(
+    {
+      sub: user.email,
+      name: user.name,
+      picture: user.picture,
+    },
+    c.env.JWT_SECRET
+  )
+
+  return c.json({
+    token: appToken,
+    user,
+    googleToken: tokenData,
+  })
+})
+
+
 
 export default authRouter;
