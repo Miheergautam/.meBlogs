@@ -19,12 +19,14 @@ import ProfileLayout from "./layout/ProfileLayout";
 // Protected Route
 import ProtectedRoute from "./components/ProtectedRoute";
 import ComingSoonPage from "./pages/ComingSoonPage";
+import OAuthSuccess from "./pages/OAuthSuccess";
 
 function App() {
   return (
       <BrowserRouter>
         <Routes>
-          {/* Public Routes */}
+        <Route path="/oauth-success" element={<OAuthSuccess />} />
+        {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/about" element={<ComingSoonPage />} />
           <Route path="/contact" element={<ComingSoonPage />} />

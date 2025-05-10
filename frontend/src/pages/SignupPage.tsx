@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IoArrowBack, IoEye, IoEyeOff } from "react-icons/io5";
 import { useRegisterUserMutation } from "../redux/services/meBlogsApi";
+import { FcGoogle } from "react-icons/fc";
+
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -31,6 +33,11 @@ const SignupPage = () => {
     }
   };
 
+  const handleGoogleLogin = () => {
+    window.location.href =
+      "https://backend.miheergautam04.workers.dev/api/v1/auth/google";
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-neutral-900 text-white px-4 sm:px-6 md:px-8">
       <div className="w-full max-w-md sm:max-w-sm md:max-w-md bg-neutral-800 p-6 sm:p-8 rounded-2xl shadow-lg border border-neutral-700 relative">
@@ -43,6 +50,16 @@ const SignupPage = () => {
         </button>
 
         <h2 className="text-2xl sm:text-3xl font-extrabold text-center mb-5 sm:mb-6">Sign Up</h2>
+        <div className="border-b mb-5 border-neutral-600">
+          {/* Google Sign-In Button */}
+          <button
+            onClick={handleGoogleLogin}
+            className="mb-3 w-full py-2 px-4 rounded-xl bg-white text-neutral-800 border border-neutral-300 shadow-sm hover:shadow-md hover:bg-neutral-200 transition-all font-medium flex items-center justify-center gap-3"
+          >
+            <FcGoogle className="w-6 h-6" />
+            <span className="text-sm sm:text-base">Continue with Google</span>
+          </button>
+        </div>
 
         {errorMessage && <p className="text-red-500 text-center mb-3">{errorMessage}</p>}
         {isSuccess && <p className="text-green-500 text-center mb-3">Signup successful! Redirecting...</p>}

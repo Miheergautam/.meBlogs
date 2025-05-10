@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IoArrowBack, IoEye, IoEyeOff } from "react-icons/io5";
 import { useLoginUserMutation } from "../redux/services/meBlogsApi";
+import { FcGoogle } from "react-icons/fc"; 
 
 const SigninPage = () => {
   const [formData, setFormData] = useState({
@@ -30,8 +31,9 @@ const SigninPage = () => {
     }
   };
 
-   const handleGoogleLogin = () => {
-    window.location.href = 'https://backend.miheergautam04.workers.dev/api/v1/auth/google';
+  const handleGoogleLogin = () => {
+    window.location.href =
+      "https://backend.miheergautam04.workers.dev/api/v1/auth/google";
   };
 
   return (
@@ -45,14 +47,31 @@ const SigninPage = () => {
           <IoArrowBack size={22} />
         </button>
 
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-center mb-5 sm:mb-6">Sign In</h2>
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-center mb-5 sm:mb-6">
+          Sign In
+        </h2>
 
-        {errorMessage && <p className="text-red-500 text-center mb-3">{errorMessage}</p>}
+        <div className="border-b mb-5 border-neutral-600">
+          {/* Google Sign-In Button */}
+          <button
+            onClick={handleGoogleLogin}
+            className="mb-3 w-full py-2 px-4 rounded-xl bg-white text-neutral-800 border border-neutral-300 shadow-sm hover:shadow-md hover:bg-neutral-200 transition-all font-medium flex items-center justify-center gap-3"
+          >
+            <FcGoogle className="w-6 h-6" />
+            <span className="text-sm sm:text-base">Continue with Google</span>
+          </button>
+        </div>
+
+        {errorMessage && (
+          <p className="text-red-500 text-center mb-3">{errorMessage}</p>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
           {/* Email Input */}
           <div>
-            <label className="block text-neutral-300 text-sm mb-1">Email Address</label>
+            <label className="block text-neutral-300 text-sm mb-1">
+              Email Address
+            </label>
             <input
               type="email"
               name="email"
@@ -66,7 +85,9 @@ const SigninPage = () => {
 
           {/* Password Input with Toggle */}
           <div className="relative">
-            <label className="block text-neutral-300 text-sm mb-1">Password</label>
+            <label className="block text-neutral-300 text-sm mb-1">
+              Password
+            </label>
             <input
               type={showPassword ? "text" : "password"}
               name="password"
@@ -98,15 +119,6 @@ const SigninPage = () => {
             {isLoading ? "Signing in..." : "Sign In"}
           </button>
         </form>
-
-        {/* Google Sign-In Button */}
-        <button
-          onClick={handleGoogleLogin}
-          className="mt-4 w-full py-2.5 sm:py-3 rounded-full bg-blue-500 hover:bg-blue-600 font-semibold transition-all flex items-center justify-center gap-2"
-        >
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" alt="Google" className="w-5 h-5" />
-          Continue with Google
-        </button>
 
         <p className="text-center text-neutral-400 mt-4 text-sm">
           Don't have an account?{" "}
