@@ -3,7 +3,6 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 import { Context } from "hono";
 import bcrypt from "bcryptjs";
 
-
 import { sign, verify } from "hono/jwt";
 import { signinInput, signupInput } from "@miheer_gautam4/.meblogs-common";
 
@@ -111,7 +110,15 @@ const updateUser = async (c: Context<AppBindings>) => {
     const userId = decoded.id as number;
 
     const body = await c.req.json();
-    const { name, bio, profileImage } = body;
+    const {
+      name,
+      bio,
+      profileImage,
+      instagram = "",
+      linkedIn = "",
+      github = "",
+      twitter = "",
+    } = body;
 
     if (!name && !bio && !profileImage) {
       console.error("No fields provided to update");
@@ -124,13 +131,25 @@ const updateUser = async (c: Context<AppBindings>) => {
 
     const updatedUser = await prisma.user.update({
       where: { id: userId },
-      data: { name, bio, profileImage },
+      data: {
+        name,
+        bio,
+        profileImage,
+        instagram,
+        linkedIn,
+        github,
+        twitter,
+      },
       select: {
         id: true,
         name: true,
         bio: true,
         profileImage: true,
         email: true,
+        linkedIn: true,
+        instagram: true,
+        github: true,
+        twitter: true,
       },
     });
 
@@ -185,6 +204,10 @@ const getUser = async (c: Context<AppBindings>) => {
         email: true,
         bio: true,
         profileImage: true,
+        linkedIn: true,
+        instagram: true,
+        github: true,
+        twitter: true,
       },
     });
 
@@ -207,9 +230,6 @@ const getUser = async (c: Context<AppBindings>) => {
     );
   }
 };
-
-
-
 
 const authFunctions = {
   userLogin,

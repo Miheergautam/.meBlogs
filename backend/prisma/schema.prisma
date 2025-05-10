@@ -26,6 +26,12 @@ model User {
   blogs        Blog[]
   likes        Like[] // Relation: One user can like many blogs
 
+  // Social links
+  instagram    String?  @db.VarChar(255)
+  linkedIn     String?  @db.VarChar(255)
+  github       String?  @db.VarChar(255)
+  twitter      String?  @db.VarChar(255)
+
 }
 
 model Blog {
