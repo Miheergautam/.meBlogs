@@ -45,8 +45,7 @@ export interface Like {
 }
 
 // Define the base URL
-const BASE_URL ="http://localhost:8787/api/v1"; /* "https://backend.miheergautam04.workers.dev/api/v1" */
-
+const BASE_URL =/* "http://localhost:8787/api/v1" */ "https://backend.miheergautam04.workers.dev/api/v1";
 export const meBlogsApi = createApi({
   reducerPath: "meBlogsApi",
   baseQuery: fetchBaseQuery({
