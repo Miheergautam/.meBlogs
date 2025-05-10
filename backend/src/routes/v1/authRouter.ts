@@ -84,7 +84,7 @@ authRouter.get('/google/callback', async (c) => {
     c.env.JWT_SECRET
   )
 
-  return c.redirect(`${FrontendURL}/oauth-success?token=${appToken}`);
+  return c.redirect(`${FrontendURL}oauth-success?token=${appToken}`);
 
 });
 
