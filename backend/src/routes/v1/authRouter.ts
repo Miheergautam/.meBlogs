@@ -77,7 +77,7 @@ authRouter.get('/google/callback', async (c) => {
 
   const appToken = await sign(
     {
-      sub: existingUser.id,
+      id: existingUser.id,
       name: existingUser.name,
       picture: existingUser.profileImage,
     },
