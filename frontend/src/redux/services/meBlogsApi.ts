@@ -15,6 +15,10 @@ export interface Blog {
     email: string;
     bio: string;
     profileImage: string;
+    instagram?: string;
+    linkedIn?: string;
+    github?: string;
+    twitter?: string;
   };
 }
 

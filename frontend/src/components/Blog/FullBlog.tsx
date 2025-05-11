@@ -144,16 +144,16 @@ export default function FullBlog({ blog }: { blog: Blog }) {
 
           {/* Social Media Links */}
           <div className="flex mt-4 space-x-4">
-            <a href="#" target="_blank" rel="noopener noreferrer">
+            <a href={blog?.author?.linkedIn} target="_blank" rel="noopener noreferrer">
               <FaLinkedin className="text-gray-400 hover:text-gray-200 text-2xl transition-colors" />
             </a>
-            <a href="#" target="_blank" rel="noopener noreferrer">
+            <a href={blog?.author?.instagram} target="_blank" rel="noopener noreferrer">
               <FaInstagram className="text-gray-400 hover:text-gray-200 text-2xl transition-colors" />
             </a>
-            <a href="#" target="_blank" rel="noopener noreferrer">
+            <a href={blog?.author?.twitter} target="_blank" rel="noopener noreferrer">
               <FaTwitter className="text-gray-400 hover:text-gray-200 text-2xl transition-colors" />
             </a>
-            <a href="#" target="_blank" rel="noopener noreferrer">
+            <a href={blog?.author?.github} target="_blank" rel="noopener noreferrer">
               <FaGithub className="text-gray-400 hover:text-gray-200 text-2xl transition-colors" />
             </a>
           </div>
